@@ -1,4 +1,10 @@
 package andrewafony.test.wallpaperapp.core
 
-interface Mapper {
+
+/**
+ * @param R result type
+ */
+interface Mapper<R> {
+
+    fun map() : R
 }

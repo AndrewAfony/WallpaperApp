@@ -1,9 +1,12 @@
-package andrewafony.test.wallpaperapp.data.model
+package andrewafony.test.wallpaperapp.data.remote.model
 
+import andrewafony.test.wallpaperapp.core.Mapper
+import andrewafony.test.wallpaperapp.data.local.entities.WallpaperEntity
+import andrewafony.test.wallpaperapp.domain.model.Wallpaper
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Info(
+data class WallpaperInfo(
     val category: String,
     val colors: List<String>,
     val created_at: String,
@@ -19,7 +22,17 @@ data class Info(
     val resolution: String,
     val short_url: String,
     val source: String,
-    val thumbs: Thumbs,
+    val thumbs: WallpaperThumbs,
     val url: String,
     val views: Int
+)
+
+fun WallpaperInfo.asWallpaper() = Wallpaper(
+    url = path,
+    category = category,
+    source = source
+)
+
+fun WallpaperInfo.asWallpaperEntity() = WallpaperEntity(
+    id = id.hashCode()
 )
