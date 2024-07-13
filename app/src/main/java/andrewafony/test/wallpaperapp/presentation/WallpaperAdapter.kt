@@ -41,7 +41,6 @@ class WallpaperViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(wallpaper: Wallpaper) { // todo loader and error
-        Log.d("MyHelper", "bind: ${wallpaper.id}")
         Glide
             .with(binding.root)
             .load(wallpaper.url)

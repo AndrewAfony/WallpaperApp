@@ -51,12 +51,6 @@ class MainFragment : Fragment() {
         adapter = WallpaperAdapter()
 
         binding.rvWallpapers.adapter = adapter
-
-        lifecycleScope.launch {
-//            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.wallpapers.collectLatest(adapter::submitData)
-//            }
-        }
     }
 
     override fun onStart() {
