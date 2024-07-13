@@ -28,6 +28,7 @@ data class WallpaperInfo(
 )
 
 fun WallpaperInfo.asWallpaper() = Wallpaper(
+    id = id,
     url = path,
     category = category,
     source = source

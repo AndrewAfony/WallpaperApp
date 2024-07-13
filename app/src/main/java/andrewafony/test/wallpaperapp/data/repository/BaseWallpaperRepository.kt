@@ -1,17 +1,18 @@
 package andrewafony.test.wallpaperapp.data.repository
 
+import andrewafony.test.wallpaperapp.data.WallpaperPagingSource
 import andrewafony.test.wallpaperapp.data.remote.Ratio
 import andrewafony.test.wallpaperapp.data.remote.WallpaperCloudDataSource
 import andrewafony.test.wallpaperapp.domain.model.Wallpaper
 import andrewafony.test.wallpaperapp.domain.repository.WallpaperRepository
-import android.util.Log
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class BaseWallpaperRepository @Inject constructor(
@@ -30,5 +31,20 @@ class BaseWallpaperRepository @Inject constructor(
         }
             .flowOn(Dispatchers.IO) // todo DI dispatcher
             .map { it.map() }
+    }
+
+    override fun wallpapersPaging(query: String): Flow<PagingData<Wallpaper>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = PAGE_SIZE,
+                enablePlaceholders = true
+            ),
+            pagingSourceFactory = { WallpaperPagingSource(cloudDataSource, query) }
+        ).flow
+    }
+
+    companion object {
+
+        private const val PAGE_SIZE = 24
     }
 }
