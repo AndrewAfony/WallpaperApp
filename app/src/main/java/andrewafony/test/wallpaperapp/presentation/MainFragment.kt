@@ -7,20 +7,37 @@ import android.view.View
 import android.view.ViewGroup
 import andrewafony.test.wallpaperapp.R
 import andrewafony.test.wallpaperapp.databinding.FragmentMainBinding
+import android.content.Intent
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
+import android.provider.AlarmClock
 import android.util.Log
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.whenStarted
+import androidx.lifecycle.withStarted
 import androidx.paging.LoadState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withLock
+import java.util.concurrent.atomic.AtomicInteger
+import java.util.concurrent.atomic.AtomicReference
+import java.util.concurrent.atomic.AtomicStampedReference
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
+
+    val test = 1123
 
     private val viewModel: MainViewModel by viewModels()
 
@@ -51,7 +68,6 @@ class MainFragment : Fragment() {
 
         adapter = WallpaperAdapter()
         binding.rvWallpapers.adapter = adapter
-
 
         lifecycleScope.launch {
             adapter.loadStateFlow.collect { loadState ->

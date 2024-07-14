@@ -7,7 +7,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface WallpaperRepository {
 
-    fun searchWallpapers(query: String?): Flow<List<Wallpaper>>
-
     fun wallpapersPaging(query: String): Flow<PagingData<Wallpaper>>
 }

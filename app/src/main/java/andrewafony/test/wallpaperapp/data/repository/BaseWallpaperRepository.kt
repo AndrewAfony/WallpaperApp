@@ -19,20 +19,6 @@ class BaseWallpaperRepository @Inject constructor(
     private val cloudDataSource: WallpaperCloudDataSource,
 ) : WallpaperRepository {
 
-    override fun searchWallpapers(query: String?): Flow<List<Wallpaper>> {
-        return flow {
-            emit(
-                cloudDataSource.search(
-                    query = query,
-                    ratio = Ratio.PORTRAIT,
-                    page = 1
-                )
-            )
-        }
-            .flowOn(Dispatchers.IO) // todo DI dispatcher
-            .map { it.map() }
-    }
-
     override fun wallpapersPaging(query: String): Flow<PagingData<Wallpaper>> {
         return Pager(
             config = PagingConfig(
