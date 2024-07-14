@@ -4,6 +4,7 @@ import andrewafony.test.wallpaperapp.data.remote.Ratio
 import andrewafony.test.wallpaperapp.data.remote.WallpaperCloudDataSource
 import andrewafony.test.wallpaperapp.data.remote.model.asWallpaper
 import andrewafony.test.wallpaperapp.domain.model.Wallpaper
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 

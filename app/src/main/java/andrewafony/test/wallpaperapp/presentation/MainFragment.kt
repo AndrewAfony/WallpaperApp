@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.LoadState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
@@ -49,8 +50,20 @@ class MainFragment : Fragment() {
         })
 
         adapter = WallpaperAdapter()
-
         binding.rvWallpapers.adapter = adapter
+
+
+        lifecycleScope.launch {
+            adapter.loadStateFlow.collect { loadState ->
+                binding.progressBar.visibility =
+                    if (loadState.refresh is LoadState.Loading) View.VISIBLE else View.GONE
+                if (loadState.refresh is LoadState.Error) {
+                    binding.errorText.visibility = View.VISIBLE
+                    binding.errorText.text = (loadState.refresh as LoadState.Error).error.message
+                } else
+                    binding.errorText.visibility = View.GONE
+            }
+        }
     }
 
     override fun onStart() {

@@ -21,8 +21,3 @@ interface WallpapersApi {
 enum class Ratio(val ratio: String) {
     PORTRAIT("9x16")
 }
-
-object ServiceApi {
-
-
-}

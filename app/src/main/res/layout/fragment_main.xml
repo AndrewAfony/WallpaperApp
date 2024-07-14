@@ -6,6 +6,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.MainFragment">
 
+
+    <TextView
+        android:id="@+id/error_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textColor="#FF0000"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/rv_wallpapers"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/rv_wallpapers"
+        app:layout_constraintTop_toTopOf="@+id/searchBar"
+        tools:text="Error! \nCheck your internet connection" />
+
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchBar"
         android:layout_width="match_parent"
@@ -24,5 +39,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchBar"
         app:spanCount="2" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
