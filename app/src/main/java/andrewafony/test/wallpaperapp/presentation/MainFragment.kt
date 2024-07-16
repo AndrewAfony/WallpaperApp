@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import andrewafony.test.wallpaperapp.R
+import andrewafony.test.wallpaperapp.core.BaseFragment
 import andrewafony.test.wallpaperapp.databinding.FragmentMainBinding
 import android.content.Intent
 import android.os.Handler
@@ -35,22 +36,14 @@ import java.util.concurrent.atomic.AtomicReference
 import java.util.concurrent.atomic.AtomicStampedReference
 
 @AndroidEntryPoint
-class MainFragment : Fragment() {
-
-    val test = 1123
+class MainFragment : BaseFragment<FragmentMainBinding>() {
 
     private val viewModel: MainViewModel by viewModels()
 
-    private lateinit var binding: FragmentMainBinding
     private lateinit var adapter: WallpaperAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
-        binding = FragmentMainBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentMainBinding
+        get() = FragmentMainBinding::inflate
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
