@@ -32,6 +32,9 @@ class MainViewModel @Inject constructor(
 
     private val searchQuery = savedStateHandle.getStateFlow(SEARCH_QUERY, "")
 
+    private val _currentWallpaper = MutableStateFlow("")
+    val currentWallpaper: StateFlow<String> = _currentWallpaper
+
     val wallpapers = searchQuery
         .debounce { query -> if (query.isNotEmpty()) 500 else 0 }
         .flatMapLatest { query ->
@@ -41,6 +44,10 @@ class MainViewModel @Inject constructor(
 
     fun onSearch(query: String) {
         savedStateHandle[SEARCH_QUERY] = query
+    }
+
+    fun openWallpaper(wallpaperUri: String) {
+        _currentWallpaper.value = wallpaperUri
     }
 
     companion object {

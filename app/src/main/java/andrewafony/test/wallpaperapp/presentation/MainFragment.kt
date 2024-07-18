@@ -17,6 +17,9 @@ import android.util.Log
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -38,7 +41,7 @@ import java.util.concurrent.atomic.AtomicStampedReference
 @AndroidEntryPoint
 class MainFragment : BaseFragment<FragmentMainBinding>() {
 
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel by activityViewModels<MainViewModel>()
 
     private lateinit var adapter: WallpaperAdapter
 
@@ -59,7 +62,16 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
             }
         })
 
-        adapter = WallpaperAdapter()
+        adapter = WallpaperAdapter {
+            viewModel.openWallpaper(it)
+
+            parentFragmentManager.commit {
+                setReorderingAllowed(true)
+                add<DetailWallpaperFragment>(R.id.container)
+                addToBackStack(null)
+            }
+        }
+
         binding.rvWallpapers.adapter = adapter
 
         lifecycleScope.launch {
