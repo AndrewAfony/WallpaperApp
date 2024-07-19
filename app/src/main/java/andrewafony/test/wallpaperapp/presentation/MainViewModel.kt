@@ -4,23 +4,12 @@ import andrewafony.test.wallpaperapp.domain.repository.WallpaperRepository
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.onCompletion
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
@@ -32,9 +21,6 @@ class MainViewModel @Inject constructor(
 
     private val searchQuery = savedStateHandle.getStateFlow(SEARCH_QUERY, "")
 
-    private val _currentWallpaper = MutableStateFlow("")
-    val currentWallpaper: StateFlow<String> = _currentWallpaper
-
     val wallpapers = searchQuery
         .debounce { query -> if (query.isNotEmpty()) 500 else 0 }
         .flatMapLatest { query ->
@@ -44,10 +30,6 @@ class MainViewModel @Inject constructor(
 
     fun onSearch(query: String) {
         savedStateHandle[SEARCH_QUERY] = query
-    }
-
-    fun openWallpaper(wallpaperUri: String) {
-        _currentWallpaper.value = wallpaperUri
     }
 
     companion object {

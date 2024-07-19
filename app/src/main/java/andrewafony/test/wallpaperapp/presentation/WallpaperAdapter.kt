@@ -4,7 +4,9 @@ import andrewafony.test.wallpaperapp.databinding.WallpaperItemBinding
 import andrewafony.test.wallpaperapp.domain.model.Wallpaper
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -45,6 +47,7 @@ class WallpaperViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(wallpaper: Wallpaper) { // todo loader and error
+
         Glide
             .with(binding.root)
             .load(wallpaper.url)
