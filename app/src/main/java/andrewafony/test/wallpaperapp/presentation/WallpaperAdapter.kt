@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 class WallpaperAdapter(
-    private val onClick : (String) -> Unit
+    private val onClick : (Wallpaper) -> Unit
 ): PagingDataAdapter<Wallpaper, WallpaperViewHolder>(DiffUtilCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WallpaperViewHolder {
@@ -43,7 +43,7 @@ object DiffUtilCallback : DiffUtil.ItemCallback<Wallpaper>() {
 
 class WallpaperViewHolder(
     private val binding: WallpaperItemBinding,
-    private val onClick: (String) -> Unit
+    private val onClick: (Wallpaper) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(wallpaper: Wallpaper) { // todo loader and error
@@ -54,6 +54,6 @@ class WallpaperViewHolder(
             .centerCrop()
             .into(binding.wallpaper)
 
-        binding.root.setOnClickListener { onClick(wallpaper.url) }
+        binding.root.setOnClickListener { onClick(wallpaper) }
     }
 }

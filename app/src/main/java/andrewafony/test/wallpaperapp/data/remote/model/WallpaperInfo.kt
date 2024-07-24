@@ -31,7 +31,11 @@ fun WallpaperInfo.asWallpaper() = Wallpaper(
     id = id,
     url = path,
     category = category,
-    source = source
+    source = source,
+    views = views,
+    favorites = favorites,
+    size = "%.1f".format(file_size/1048576.0),
+    resolution = resolution
 )
 
 fun WallpaperInfo.asWallpaperEntity() = WallpaperEntity(

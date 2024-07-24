@@ -4,11 +4,13 @@ import andrewafony.test.wallpaperapp.R
 import andrewafony.test.wallpaperapp.core.BaseFragment
 import andrewafony.test.wallpaperapp.databinding.FragmentMainBinding
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
@@ -21,7 +23,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MainFragment : BaseFragment<FragmentMainBinding>() {
 
-    private val viewModel by viewModels<MainViewModel>()
+    private val viewModel by activityViewModels<MainViewModel>()
 
     private lateinit var adapter: WallpaperAdapter
 
@@ -43,12 +45,11 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
         })
 
         adapter = WallpaperAdapter { wallpaper ->
-
-            val image = bundleOf("wallpaper" to wallpaper)
+            viewModel.openWallpaper(wallpaper)
 
             parentFragmentManager.commit {
                 setReorderingAllowed(true)
-                add<DetailWallpaperFragment>(R.id.container, args = image)
+                add<DetailWallpaperFragment>(R.id.container)
                 addToBackStack(null)
             }
         }
@@ -60,6 +61,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
                 binding.progressBar.visibility =
                     if (loadState.refresh is LoadState.Loading) View.VISIBLE else View.GONE
                 if (loadState.refresh is LoadState.Error) {
+                    Log.d("MyHelper", "error: ${(loadState.refresh as LoadState.Error).error}")
                     binding.errorText.visibility = View.VISIBLE
                     binding.errorText.text = (loadState.refresh as LoadState.Error).error.message
                 } else
