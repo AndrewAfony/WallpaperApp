@@ -2,11 +2,14 @@ package andrewafony.test.wallpaperapp.presentation
 
 import andrewafony.test.wallpaperapp.core.BaseFragment
 import andrewafony.test.wallpaperapp.databinding.FragmentDetailWallpaperBinding
+import andrewafony.test.wallpaperapp.domain.ImageSaver
+import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -17,6 +20,7 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -31,7 +35,6 @@ class DetailWallpaperFragment : BaseFragment<FragmentDetailWallpaperBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         postponeEnterTransition()
-
 
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -67,6 +70,13 @@ class DetailWallpaperFragment : BaseFragment<FragmentDetailWallpaperBinding>() {
                         WallpaperInfoBottomSheetFragment.open(parentFragmentManager, wallpaper)
                     }
                 }
+            }
+        }
+
+        binding.buttonDownload.setOnClickListener {
+            lifecycleScope.launch(Dispatchers.IO) {
+                val bitmap = binding.fullWallpaper.drawable.toBitmap()
+                ImageSaver.saveImageToGallery(requireContext(), bitmap, "wallpaper_${System.currentTimeMillis()}")
             }
         }
     }
