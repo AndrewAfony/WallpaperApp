@@ -3,6 +3,7 @@ package andrewafony.test.wallpaperapp
 import andrewafony.test.wallpaperapp.databinding.ActivityMainBinding
 import andrewafony.test.wallpaperapp.presentation.MainFragment
 import android.os.Bundle
+import android.os.Environment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import dagger.hilt.android.AndroidEntryPoint

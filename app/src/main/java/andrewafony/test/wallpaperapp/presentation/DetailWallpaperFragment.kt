@@ -79,5 +79,9 @@ class DetailWallpaperFragment : BaseFragment<FragmentDetailWallpaperBinding>() {
                 ImageSaver.saveImageToGallery(requireContext(), bitmap, "wallpaper_${System.currentTimeMillis()}")
             }
         }
+
+        binding.buttonBack.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
     }
 }
