@@ -3,23 +3,21 @@ package andrewafony.test.wallpaperapp.presentation
 import andrewafony.test.wallpaperapp.core.BaseFragment
 import andrewafony.test.wallpaperapp.databinding.FragmentDetailWallpaperBinding
 import andrewafony.test.wallpaperapp.domain.ImageSaver
-import android.graphics.BitmapFactory
-import android.graphics.drawable.Drawable
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
+import androidx.palette.graphics.Palette
+import coil3.load
+import coil3.request.allowHardware
+import coil3.toBitmap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -39,32 +37,23 @@ class DetailWallpaperFragment : BaseFragment<FragmentDetailWallpaperBinding>() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.currentWallpaper.collectLatest { wallpaper ->
-                    Glide
-                        .with(binding.root)
-                        .load(wallpaper?.url)
-                        .listener(object : RequestListener<Drawable> {
-                            override fun onLoadFailed(
-                                e: GlideException?,
-                                model: Any?,
-                                target: Target<Drawable>,
-                                isFirstResource: Boolean,
-                            ): Boolean {
+                    binding.fullWallpaper.load(wallpaper?.url) {
+                        allowHardware(false)
+                        listener(
+                            onError = { _, _ ->
                                 startPostponedEnterTransition()
-                                return false
-                            }
-
-                            override fun onResourceReady(
-                                resource: Drawable,
-                                model: Any,
-                                target: Target<Drawable>?,
-                                dataSource: DataSource,
-                                isFirstResource: Boolean,
-                            ): Boolean {
+                            },
+                            onSuccess = { _, result ->
+                                Palette.Builder(result.image.toBitmap()).generate { palette ->
+                                    palette?.getDominantColor(Color.WHITE)?.let {
+                                        binding.root.setBackgroundColor(it)
+                                        binding.buttonBack.setButtonColor(it)
+                                    }
+                                }
                                 startPostponedEnterTransition()
-                                return false
                             }
-                        })
-                        .into(binding.fullWallpaper)
+                        )
+                    }
 
                     binding.buttonInfo.setOnClickListener {
                         WallpaperInfoBottomSheetFragment.open(parentFragmentManager, wallpaper)
@@ -76,7 +65,11 @@ class DetailWallpaperFragment : BaseFragment<FragmentDetailWallpaperBinding>() {
         binding.buttonDownload.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
                 val bitmap = binding.fullWallpaper.drawable.toBitmap()
-                ImageSaver.saveImageToGallery(requireContext(), bitmap, "wallpaper_${System.currentTimeMillis()}")
+                ImageSaver.saveImageToGallery(
+                    requireContext(),
+                    bitmap,
+                    "wallpaper_${System.currentTimeMillis()}"
+                )
             }
         }
 
@@ -84,4 +77,19 @@ class DetailWallpaperFragment : BaseFragment<FragmentDetailWallpaperBinding>() {
             parentFragmentManager.popBackStack()
         }
     }
+}
+
+fun ImageView.setButtonColor(backgroundColor: Int) {
+    val luminance = calculateLuminance(backgroundColor)
+    val buttonColor = if (luminance < 0.5) Color.WHITE else Color.BLACK
+
+    setColorFilter(buttonColor)
+}
+
+fun calculateLuminance(color: Int): Double {
+    val red = Color.red(color) / 255.0
+    val green = Color.green(color) / 255.0
+    val blue = Color.blue(color) / 255.0
+
+    return 0.299 * red + 0.587 * green + 0.114 * blue
 }

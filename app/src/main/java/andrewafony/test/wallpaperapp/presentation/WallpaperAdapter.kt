@@ -2,16 +2,13 @@ package andrewafony.test.wallpaperapp.presentation
 
 import andrewafony.test.wallpaperapp.databinding.WallpaperItemBinding
 import andrewafony.test.wallpaperapp.domain.model.Wallpaper
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.ViewCompat
+import android.widget.ImageView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
+import coil3.load
 
 class WallpaperAdapter(
     private val onClick : (Wallpaper) -> Unit
@@ -48,11 +45,10 @@ class WallpaperViewHolder(
 
     fun bind(wallpaper: Wallpaper) { // todo loader and error
 
-        Glide
-            .with(binding.root)
-            .load(wallpaper.url)
-            .centerCrop()
-            .into(binding.wallpaper)
+        with(binding.wallpaper) {
+            scaleType = ImageView.ScaleType.CENTER_CROP
+            load(wallpaper.url)
+        }
 
         binding.root.setOnClickListener { onClick(wallpaper) }
     }

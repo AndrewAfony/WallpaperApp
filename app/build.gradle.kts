@@ -49,6 +49,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.palette.ktx)
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.kotlinx.coroutines.test)
@@ -60,7 +61,9 @@ dependencies {
     implementation(libs.retrofit2.kotlinx.serialization.converter)
     implementation(libs.okhttp)
 
-    implementation(libs.glide)
+    implementation(libs.coil)
+    implementation(libs.coil.network.okhttp)
+
     implementation(libs.androidx.fragment.ktx)
 
     implementation(libs.hilt.android)
