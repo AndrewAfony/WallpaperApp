@@ -5,11 +5,15 @@ import andrewafony.test.wallpaperapp.core.BaseFragment
 import andrewafony.test.wallpaperapp.databinding.FragmentMainBinding
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.core.os.bundleOf
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
@@ -33,16 +37,9 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.searchBar.setOnQueryTextListener(object : OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                viewModel.onSearch(newText ?: "")
-                return false
-            }
-        })
+        binding.searchBar.editText?.doOnTextChanged { query, _, _, _ ->
+            viewModel.onSearch(query.toString())
+        }
 
         adapter = WallpaperAdapter { wallpaper ->
             viewModel.openWallpaper(wallpaper)
@@ -68,6 +65,19 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
                     binding.errorText.visibility = View.GONE
             }
         }
+
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (binding.searchBar.hasFocus()) {
+                        binding.searchBar.clearFocus()
+                    } else {
+                        isEnabled = false
+                        requireActivity().onBackPressedDispatcher.onBackPressed()
+                    }
+                }
+            })
     }
 
     override fun onStart() {
