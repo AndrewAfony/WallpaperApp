@@ -4,20 +4,14 @@ import andrewafony.test.wallpaperapp.R
 import andrewafony.test.wallpaperapp.core.BaseFragment
 import andrewafony.test.wallpaperapp.databinding.FragmentMainBinding
 import android.os.Bundle
-import android.util.Log
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.widget.SearchView.OnQueryTextListener
-import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import dagger.hilt.android.AndroidEntryPoint
@@ -58,7 +52,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
                 binding.progressBar.visibility =
                     if (loadState.refresh is LoadState.Loading) View.VISIBLE else View.GONE
                 if (loadState.refresh is LoadState.Error) {
-                    Log.d("MyHelper", "error: ${(loadState.refresh as LoadState.Error).error}")
                     binding.errorText.visibility = View.VISIBLE
                     binding.errorText.text = (loadState.refresh as LoadState.Error).error.message
                 } else
@@ -72,6 +65,8 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
                 override fun handleOnBackPressed() {
                     if (binding.searchBar.hasFocus()) {
                         binding.searchBar.clearFocus()
+                    } else if(binding.searchBar.editText?.text.toString().isNotBlank()) {
+                         binding.searchBar.editText?.setText("")
                     } else {
                         isEnabled = false
                         requireActivity().onBackPressedDispatcher.onBackPressed()
