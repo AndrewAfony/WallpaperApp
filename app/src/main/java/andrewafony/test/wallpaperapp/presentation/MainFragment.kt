@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MainFragment : BaseFragment<FragmentMainBinding>() {
+class MainFragment : BaseFragment<FragmentMainBinding>(true) {
 
     private val viewModel by activityViewModels<MainViewModel>()
 
@@ -65,8 +65,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
                 override fun handleOnBackPressed() {
                     if (binding.searchBar.hasFocus()) {
                         binding.searchBar.clearFocus()
-                    } else if(binding.searchBar.editText?.text.toString().isNotBlank()) {
-                         binding.searchBar.editText?.setText("")
                     } else {
                         isEnabled = false
                         requireActivity().onBackPressedDispatcher.onBackPressed()

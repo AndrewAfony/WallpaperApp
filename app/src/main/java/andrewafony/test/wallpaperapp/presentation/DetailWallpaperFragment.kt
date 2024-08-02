@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.activity.OnBackPressedCallback
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -22,7 +23,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class DetailWallpaperFragment : BaseFragment<FragmentDetailWallpaperBinding>() {
+class DetailWallpaperFragment : BaseFragment<FragmentDetailWallpaperBinding>(
+    showBottomNavigation = false
+) {
 
     private val viewModel by activityViewModels<MainViewModel>()
 
@@ -76,6 +79,10 @@ class DetailWallpaperFragment : BaseFragment<FragmentDetailWallpaperBinding>() {
         binding.buttonBack.setOnClickListener {
             parentFragmentManager.popBackStack()
         }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() { parentFragmentManager.popBackStack() }
+        })
     }
 }
 
