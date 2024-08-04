@@ -41,7 +41,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(true) {
             parentFragmentManager.commit {
                 setReorderingAllowed(true)
                 add<DetailWallpaperFragment>(R.id.container)
-                addToBackStack(null)
+                addToBackStack("home tab")
             }
         }
 
