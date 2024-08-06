@@ -1,6 +1,5 @@
 package andrewafony.test.wallpaperapp.data.remote.model
 
-import andrewafony.test.wallpaperapp.core.Mapper
 import andrewafony.test.wallpaperapp.data.local.entities.WallpaperEntity
 import andrewafony.test.wallpaperapp.domain.model.Wallpaper
 import kotlinx.serialization.Serializable
@@ -39,5 +38,12 @@ fun WallpaperInfo.asWallpaper() = Wallpaper(
 )
 
 fun WallpaperInfo.asWallpaperEntity() = WallpaperEntity(
-    id = id.hashCode()
+    id = id,
+    url = path,
+    category = category,
+    source = source,
+    views = views,
+    favorites = favorites,
+    size = "%.1f".format(file_size/1048576.0),
+    resolution = resolution
 )

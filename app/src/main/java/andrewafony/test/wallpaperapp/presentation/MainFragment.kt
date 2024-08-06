@@ -35,15 +35,20 @@ class MainFragment : BaseFragment<FragmentMainBinding>(true) {
             viewModel.onSearch(query.toString())
         }
 
-        adapter = WallpaperAdapter { wallpaper ->
-            viewModel.openWallpaper(wallpaper)
+        adapter = WallpaperAdapter(
+            onClick = { wallpaper ->
+                viewModel.openWallpaper(wallpaper)
 
-            parentFragmentManager.commit {
-                setReorderingAllowed(true)
-                add<DetailWallpaperFragment>(R.id.container)
-                addToBackStack("home tab")
+                parentFragmentManager.commit {
+                    setReorderingAllowed(true)
+                    add<DetailWallpaperFragment>(R.id.container)
+                    addToBackStack("home tab")
+                }
+            },
+            onSaveClick = { wallpaper ->
+                viewModel.saveWallpaper(wallpaper)
             }
-        }
+        )
 
         binding.rvWallpapers.adapter = adapter
 

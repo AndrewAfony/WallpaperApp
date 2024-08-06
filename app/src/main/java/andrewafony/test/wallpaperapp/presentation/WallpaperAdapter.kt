@@ -11,13 +11,15 @@ import androidx.recyclerview.widget.RecyclerView
 import coil3.load
 
 class WallpaperAdapter(
-    private val onClick : (Wallpaper) -> Unit
+    private val onClick : (Wallpaper) -> Unit,
+    private val onSaveClick: (Wallpaper) -> Unit
 ): PagingDataAdapter<Wallpaper, WallpaperViewHolder>(DiffUtilCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WallpaperViewHolder {
         return WallpaperViewHolder(
             WallpaperItemBinding.inflate(LayoutInflater.from(parent.context), parent, false),
-            onClick
+            onClick,
+            onSaveClick
         )
     }
 
@@ -40,7 +42,8 @@ object DiffUtilCallback : DiffUtil.ItemCallback<Wallpaper>() {
 
 class WallpaperViewHolder(
     private val binding: WallpaperItemBinding,
-    private val onClick: (Wallpaper) -> Unit
+    private val onClick: (Wallpaper) -> Unit,
+    private val onSaveClick: (Wallpaper) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(wallpaper: Wallpaper) { // todo loader and error
@@ -49,6 +52,8 @@ class WallpaperViewHolder(
             scaleType = ImageView.ScaleType.CENTER_CROP
             load(wallpaper.url)
         }
+
+        binding.buttonLike.setOnClickListener { onSaveClick(wallpaper) }
 
         binding.root.setOnClickListener { onClick(wallpaper) }
     }

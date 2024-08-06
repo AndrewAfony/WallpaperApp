@@ -10,9 +10,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
@@ -34,12 +37,31 @@ class MainViewModel @Inject constructor(
         }
         .cachedIn(viewModelScope)
 
+    val savedWallpapers = repository.savedWallpapers()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = emptyList()
+        )
+
     fun onSearch(query: String) {
         savedStateHandle[SEARCH_QUERY] = query
     }
 
     fun openWallpaper(wallpaper: Wallpaper) {
         _currentWallpaper.value = wallpaper
+    }
+
+    fun saveWallpaper(wallpaper: Wallpaper) {
+        viewModelScope.launch {
+            repository.saveWallpaper(wallpaper)
+        }
+    }
+
+    fun removeWallpaper(wallpaper: Wallpaper) {
+        viewModelScope.launch {
+            repository.removeWallpaper(wallpaper)
+        }
     }
 
     companion object {
