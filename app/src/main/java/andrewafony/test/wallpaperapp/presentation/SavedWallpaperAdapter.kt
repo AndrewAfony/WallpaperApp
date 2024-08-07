@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class SavedWallpaperAdapter(
     private val onClick: (Wallpaper) -> Unit,
-    private val onRemove: (Wallpaper) -> Unit
+    private val onToggleFavorite: (Wallpaper) -> Unit
 ) : RecyclerView.Adapter<WallpaperViewHolder>() {
 
     private val wallpapers = mutableListOf<Wallpaper>()
@@ -24,7 +24,7 @@ class SavedWallpaperAdapter(
                 parent,
                 false),
             onClick = onClick,
-            onSaveClick = onRemove
+            onToggleFavorite = onToggleFavorite
         )
     }
 

@@ -26,7 +26,7 @@ class SavedWallpapersFragment : BaseFragment<FragmentSavedWallpapersBinding>(tru
 
         adapter = SavedWallpaperAdapter(
             onClick = {},
-            onRemove = viewModel::removeWallpaper
+            onToggleFavorite = viewModel::toggleFavorite
         )
 
         binding.rvSavedWallpapers.adapter = adapter

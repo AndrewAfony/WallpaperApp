@@ -13,7 +13,5 @@ interface WallpaperRepository {
 
     suspend fun getWallpaperById(id: String) : Wallpaper
 
-    suspend fun saveWallpaper(wallpaper: Wallpaper)
-
-    suspend fun removeWallpaper(wallpaper: Wallpaper)
+    suspend fun toggleFavorite(wallpaper: Wallpaper)
 }

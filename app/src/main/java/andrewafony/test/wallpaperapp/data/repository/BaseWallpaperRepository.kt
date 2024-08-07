@@ -40,12 +40,14 @@ class BaseWallpaperRepository @Inject constructor(
         localDataSource.getWallpaperById(id).asWallpaper()
     }
 
-    override suspend fun saveWallpaper(wallpaper: Wallpaper) = withContext(Dispatchers.IO) {
-        localDataSource.saveWallpaper(wallpaper.asEntity().copy(isSaved = true))
-    }
+    override suspend fun toggleFavorite(wallpaper: Wallpaper) = withContext(Dispatchers.IO) {
 
-    override suspend fun removeWallpaper(wallpaper: Wallpaper) = withContext(Dispatchers.IO) {
-        localDataSource.removeWallpaper(wallpaper.asEntity().copy(isSaved = false))
+        val exist = localDataSource.exists(wallpaper.id)
+
+        if (!exist) {
+            localDataSource.saveWallpaper(wallpaper.asEntity().copy(isSaved = true))
+        } else
+            localDataSource.deleteWallpaper(wallpaper.asEntity())
     }
 
     companion object {

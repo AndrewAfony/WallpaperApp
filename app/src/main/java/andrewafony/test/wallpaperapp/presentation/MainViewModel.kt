@@ -52,15 +52,9 @@ class MainViewModel @Inject constructor(
         _currentWallpaper.value = wallpaper
     }
 
-    fun saveWallpaper(wallpaper: Wallpaper) {
+    fun toggleFavorite(wallpaper: Wallpaper) {
         viewModelScope.launch {
-            repository.saveWallpaper(wallpaper)
-        }
-    }
-
-    fun removeWallpaper(wallpaper: Wallpaper) {
-        viewModelScope.launch {
-            repository.removeWallpaper(wallpaper)
+            repository.toggleFavorite(wallpaper)
         }
     }
 

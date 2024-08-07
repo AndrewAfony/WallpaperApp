@@ -42,10 +42,10 @@ class MainFragment : BaseFragment<FragmentMainBinding>(true) {
                 parentFragmentManager.commit {
                     setReorderingAllowed(true)
                     add<DetailWallpaperFragment>(R.id.container)
-                    addToBackStack("home tab")
+                    addToBackStack(null)
                 }
             },
-            onSaveClick = viewModel::saveWallpaper
+            onToggleFavorite = viewModel::toggleFavorite
         )
 
         binding.rvWallpapers.adapter = adapter

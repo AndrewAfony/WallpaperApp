@@ -12,7 +12,9 @@ interface WallpaperLocalDataSource {
 
     suspend fun saveWallpaper(wallpaper: WallpaperEntity)
 
-    suspend fun removeWallpaper(wallpaper: WallpaperEntity)
+    suspend fun deleteWallpaper(wallpaper: WallpaperEntity)
+
+    suspend fun exists(id: String) : Boolean
 
     class Base @Inject constructor (private val dao: WallpaperDao) : WallpaperLocalDataSource {
 
@@ -24,7 +26,9 @@ interface WallpaperLocalDataSource {
         override suspend fun saveWallpaper(wallpaper: WallpaperEntity) =
             dao.saveWallpaper(wallpaper)
 
-        override suspend fun removeWallpaper(wallpaper: WallpaperEntity) =
-            dao.removeWallpaper(wallpaper)
+        override suspend fun deleteWallpaper(wallpaper: WallpaperEntity) =
+            dao.deleteWallpaper(wallpaper)
+
+        override suspend fun exists(id: String): Boolean = dao.exists(id)
     }
 }

@@ -13,14 +13,14 @@ import andrewafony.test.wallpaperapp.R
 
 class WallpaperAdapter(
     private val onClick: (Wallpaper) -> Unit,
-    private val onSaveClick: (Wallpaper) -> Unit,
+    private val onToggleFavorite: (Wallpaper) -> Unit,
 ) : PagingDataAdapter<Wallpaper, WallpaperViewHolder>(DiffUtilCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WallpaperViewHolder {
         return WallpaperViewHolder(
             WallpaperItemBinding.inflate(LayoutInflater.from(parent.context), parent, false),
             onClick,
-            onSaveClick
+            onToggleFavorite
         )
     }
 
@@ -44,7 +44,7 @@ object DiffUtilCallback : DiffUtil.ItemCallback<Wallpaper>() {
 class WallpaperViewHolder(
     private val binding: WallpaperItemBinding,
     private val onClick: (Wallpaper) -> Unit,
-    private val onSaveClick: (Wallpaper) -> Unit,
+    private val onToggleFavorite: (Wallpaper) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(wallpaper: Wallpaper) { // todo loader and error
@@ -57,7 +57,7 @@ class WallpaperViewHolder(
         with(binding.buttonLike) { // todo update star when clicked
             val star = if (wallpaper.isSaved) R.drawable.ic_star_filled else R.drawable.ic_star
             setImageResource(star)
-            setOnClickListener { onSaveClick(wallpaper) }
+            setOnClickListener { onToggleFavorite(wallpaper) }
         }
 
         binding.root.setOnClickListener { onClick(wallpaper) }
