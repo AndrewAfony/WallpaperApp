@@ -41,11 +41,11 @@ class BaseWallpaperRepository @Inject constructor(
     }
 
     override suspend fun saveWallpaper(wallpaper: Wallpaper) = withContext(Dispatchers.IO) {
-        localDataSource.saveWallpaper(wallpaper.asEntity())
+        localDataSource.saveWallpaper(wallpaper.asEntity().copy(isSaved = true))
     }
 
     override suspend fun removeWallpaper(wallpaper: Wallpaper) = withContext(Dispatchers.IO) {
-        localDataSource.removeWallpaper(wallpaper.asEntity())
+        localDataSource.removeWallpaper(wallpaper.asEntity().copy(isSaved = false))
     }
 
     companion object {

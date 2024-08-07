@@ -45,9 +45,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(true) {
                     addToBackStack("home tab")
                 }
             },
-            onSaveClick = { wallpaper ->
-                viewModel.saveWallpaper(wallpaper)
-            }
+            onSaveClick = viewModel::saveWallpaper
         )
 
         binding.rvWallpapers.adapter = adapter

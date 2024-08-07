@@ -7,7 +7,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
-class SavedWallpaperAdapter : RecyclerView.Adapter<WallpaperViewHolder>() {
+class SavedWallpaperAdapter(
+    private val onClick: (Wallpaper) -> Unit,
+    private val onRemove: (Wallpaper) -> Unit
+) : RecyclerView.Adapter<WallpaperViewHolder>() {
 
     private val wallpapers = mutableListOf<Wallpaper>()
 
@@ -20,8 +23,8 @@ class SavedWallpaperAdapter : RecyclerView.Adapter<WallpaperViewHolder>() {
                 LayoutInflater.from(parent.context),
                 parent,
                 false),
-            onClick = {},
-            onSaveClick = {}
+            onClick = onClick,
+            onSaveClick = onRemove
         )
     }
 

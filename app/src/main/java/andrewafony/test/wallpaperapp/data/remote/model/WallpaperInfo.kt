@@ -34,7 +34,8 @@ fun WallpaperInfo.asWallpaper() = Wallpaper(
     views = views,
     favorites = favorites,
     size = "%.1f".format(file_size/1048576.0),
-    resolution = resolution
+    resolution = resolution,
+    isSaved = false
 )
 
 fun WallpaperInfo.asWallpaperEntity() = WallpaperEntity(
@@ -45,5 +46,6 @@ fun WallpaperInfo.asWallpaperEntity() = WallpaperEntity(
     views = views,
     favorites = favorites,
     size = "%.1f".format(file_size/1048576.0),
-    resolution = resolution
+    resolution = resolution,
+    isSaved = false
 )

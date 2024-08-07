@@ -10,7 +10,8 @@ data class Wallpaper(
     val views: Int,
     val favorites: Int,
     val size: String,
-    val resolution: String
+    val resolution: String,
+    val isSaved: Boolean
 )
 
 fun Wallpaper.asEntity() = WallpaperEntity(
@@ -21,5 +22,6 @@ fun Wallpaper.asEntity() = WallpaperEntity(
     views = views,
     favorites = favorites,
     size = size,
-    resolution = resolution
+    resolution = resolution,
+    isSaved = isSaved
 )

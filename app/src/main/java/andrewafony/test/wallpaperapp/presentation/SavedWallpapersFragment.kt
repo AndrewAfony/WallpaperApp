@@ -24,7 +24,10 @@ class SavedWallpapersFragment : BaseFragment<FragmentSavedWallpapersBinding>(tru
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = SavedWallpaperAdapter()
+        adapter = SavedWallpaperAdapter(
+            onClick = {},
+            onRemove = viewModel::removeWallpaper
+        )
 
         binding.rvSavedWallpapers.adapter = adapter
 

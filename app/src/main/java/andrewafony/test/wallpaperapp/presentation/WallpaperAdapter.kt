@@ -9,11 +9,12 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil3.load
+import andrewafony.test.wallpaperapp.R
 
 class WallpaperAdapter(
-    private val onClick : (Wallpaper) -> Unit,
-    private val onSaveClick: (Wallpaper) -> Unit
-): PagingDataAdapter<Wallpaper, WallpaperViewHolder>(DiffUtilCallback) {
+    private val onClick: (Wallpaper) -> Unit,
+    private val onSaveClick: (Wallpaper) -> Unit,
+) : PagingDataAdapter<Wallpaper, WallpaperViewHolder>(DiffUtilCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WallpaperViewHolder {
         return WallpaperViewHolder(
@@ -43,7 +44,7 @@ object DiffUtilCallback : DiffUtil.ItemCallback<Wallpaper>() {
 class WallpaperViewHolder(
     private val binding: WallpaperItemBinding,
     private val onClick: (Wallpaper) -> Unit,
-    private val onSaveClick: (Wallpaper) -> Unit
+    private val onSaveClick: (Wallpaper) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(wallpaper: Wallpaper) { // todo loader and error
@@ -53,7 +54,11 @@ class WallpaperViewHolder(
             load(wallpaper.url)
         }
 
-        binding.buttonLike.setOnClickListener { onSaveClick(wallpaper) }
+        with(binding.buttonLike) { // todo update star when clicked
+            val star = if (wallpaper.isSaved) R.drawable.ic_star_filled else R.drawable.ic_star
+            setImageResource(star)
+            setOnClickListener { onSaveClick(wallpaper) }
+        }
 
         binding.root.setOnClickListener { onClick(wallpaper) }
     }
