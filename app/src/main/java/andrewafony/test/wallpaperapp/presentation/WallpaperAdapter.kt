@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil3.load
 import andrewafony.test.wallpaperapp.R
+import coil3.request.CachePolicy
+import coil3.request.crossfade
 
 class WallpaperAdapter(
     private val onClick: (Wallpaper) -> Unit,
@@ -44,14 +46,16 @@ object DiffUtilCallback : DiffUtil.ItemCallback<Wallpaper>() {
 class WallpaperViewHolder(
     private val binding: WallpaperItemBinding,
     private val onClick: (Wallpaper) -> Unit,
-    private val onToggleFavorite: (Wallpaper) -> Unit,
+    private val onToggleFavorite: (Wallpaper) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(wallpaper: Wallpaper) { // todo loader and error
 
         with(binding.wallpaper) {
             scaleType = ImageView.ScaleType.CENTER_CROP
-            load(wallpaper.url)
+            load(wallpaper.url) {
+                crossfade(true)
+            }
         }
 
         with(binding.buttonLike) { // todo update star when clicked

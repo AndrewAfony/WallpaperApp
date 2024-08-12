@@ -74,10 +74,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(true) {
                     }
                 }
             })
-    }
 
-    override fun onStart() {
-        super.onStart()
         lifecycleScope.launch {
             viewModel.wallpapers.collectLatest(adapter::submitData)
         }
