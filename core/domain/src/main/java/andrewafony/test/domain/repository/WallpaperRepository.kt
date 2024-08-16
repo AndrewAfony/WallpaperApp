@@ -1,0 +1,17 @@
+package andrewafony.test.wallpaperapp.domain.repository
+
+import Wallpaper
+import androidx.paging.PagingData
+import kotlinx.coroutines.flow.Flow
+
+
+interface WallpaperRepository {
+
+    fun wallpapersPaging(query: String): Flow<PagingData<Wallpaper>>
+
+    fun savedWallpapers() : Flow<List<Wallpaper>>
+
+    suspend fun getWallpaperById(id: String) : Wallpaper
+
+    suspend fun toggleFavorite(wallpaper: Wallpaper)
+}
