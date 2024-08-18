@@ -1,11 +1,44 @@
 package andrewafony.test.wallpaperapp
 
+import andrewafony.test.data.di.dataModule
+import andrewafony.test.wallpaper_saved.savedWallpapersModule
+import andrewafony.test.wallpaper_search.searchWallpapersModule
+import andrewafony.test.wallpaperapp.di.appModule
 import android.app.Application
-import dagger.hilt.android.HiltAndroidApp
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
+import android.os.StrictMode.VmPolicy
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 
-@HiltAndroidApp
-class App: Application()
+class App : Application() {
 
+    override fun onCreate() {
+        super.onCreate()
+
+        startKoin {
+            androidLogger()
+            androidContext(this@App)
+            modules(appModule, dataModule, searchWallpapersModule, savedWallpapersModule)
+        }
+
+        if (BuildConfig.DEBUG) {
+            StrictMode.setThreadPolicy(
+                ThreadPolicy.Builder()
+                    .detectAll()
+                    .penaltyLog()
+                    .build()
+            )
+            StrictMode.setVmPolicy(
+                VmPolicy.Builder()
+                    .detectAll()
+                    .penaltyLog()
+                    .build()
+            );
+        }
+    }
+}
 
 /**
  *

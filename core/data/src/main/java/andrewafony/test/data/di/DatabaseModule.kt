@@ -1,31 +1,23 @@
-package andrewafony.test.wallpaperapp.data.di
+package andrewafony.test.data.di
 
-import andrewafony.test.wallpaperapp.data.local.WallpaperDao
-import andrewafony.test.wallpaperapp.data.local.WallpaperDatabase
+import andrewafony.test.data.local.WallpaperDatabase
 import android.content.Context
 import androidx.room.Room
-import androidx.room.RoomDatabase
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-object DatabaseModule {
+internal val databaseModule = module {
 
-    @Provides
-    @Singleton
-    fun provideDatabase(
-        @ApplicationContext context: Context,
-    ): WallpaperDatabase = Room.databaseBuilder(
-        context,
-        WallpaperDatabase::class.java,
-        "wallpaper_db"
-    ).build()
+    single {
+        Room.databaseBuilder(
+            androidContext(),
+            WallpaperDatabase::class.java,
+            "wallpaper_db"
+        ).build()
+    }
 
-    @Provides
-    fun providesWallpaperDao(database: WallpaperDatabase) = database.wallpaperDao()
+    single {
+        get<WallpaperDatabase>().wallpaperDao()
+    }
 }

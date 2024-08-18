@@ -1,32 +1,22 @@
-package andrewafony.test.wallpaperapp.data.di
+package andrewafony.test.data.di
 
-import andrewafony.test.wallpaperapp.data.remote.WallpapersApi
+import andrewafony.test.data.remote.WallpapersApi
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
-import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.OkHttp
-import okhttp3.OkHttpClient
-import okhttp3.Response
+import org.koin.dsl.module
 import retrofit2.Retrofit
 
-@Module
-@InstallIn(SingletonComponent::class)
-object NetworkModule {
+internal val networkModule = module {
 
-    @Provides
-    fun provideWallpaperService(): WallpapersApi {
-
+    single {
         val retrofit = Retrofit.Builder()
-            .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
+            .addConverterFactory(Json.Default.asConverterFactory("application/json".toMediaType()))
             .baseUrl("https://wallhaven.cc/api/v1/")
             .build()
 
-        return retrofit.create(WallpapersApi::class.java)
+        retrofit.create(WallpapersApi::class.java)
+
     }
 
 }
