@@ -1,64 +1,84 @@
 package andrewafony.test.wallpaperapp
 
-import andrewafony.test.wallpaperapp.core.BaseFragment
+import andrewafony.test.common.BottomNavigationController
+import andrewafony.test.wallpaper_saved.SavedWallpapersFragment
+import andrewafony.test.wallpaper_search.MainFragment
 import andrewafony.test.wallpaperapp.databinding.ActivityMainBinding
-import andrewafony.test.wallpaperapp.presentation.MainFragment
-import andrewafony.test.wallpaperapp.presentation.SavedWallpapersFragment
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), BottomNavigationController {
 
     private lateinit var binding: ActivityMainBinding
 
-    private val fragments = mutableMapOf<String, Fragment>()
+    private val mainFragment = MainFragment()
+    private val savedFragment = SavedWallpapersFragment()
+
+    private var currentFragment: Fragment = mainFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        if (savedInstanceState == null) {
+            supportFragmentManager.commit {
+                add(R.id.container, mainFragment)
+                add(R.id.container, savedFragment)
+                hide(savedFragment)
+            }
+        }
+
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.item_home -> {
-                    supportFragmentManager.switchFragments("home")
+                R.id.main -> {
+                    supportFragmentManager.commit {
+                        hide(currentFragment)
+                        show(mainFragment)
+                    }
+                    currentFragment = mainFragment
                     true
                 }
-                R.id.item_saved -> {
-                    supportFragmentManager.switchFragments("saved")
+
+                R.id.saved -> {
+                    supportFragmentManager.commit {
+                        hide(currentFragment)
+                        show(savedFragment)
+                    }
+                    currentFragment = savedFragment
                     true
                 }
-                else -> false
             }
+            true
         }
 
-        binding.bottomNavigation.setOnItemReselectedListener { item ->
-            // todo handle reselection
-        }
 
-        if (savedInstanceState == null) {
-            fragments["home"] = MainFragment()
-            fragments["saved"] = SavedWallpapersFragment()
 
-            supportFragmentManager.commit {
-                add(R.id.container, fragments["home"]!!, "home")
-                add(R.id.container, fragments["saved"]!!, "saved").hide(fragments["saved"]!!)
-            }
-        } else {
-            fragments["home"] = supportFragmentManager.findFragmentByTag("home")!!
-            fragments["saved"] = supportFragmentManager.findFragmentByTag("saved")!!
-        }
+//        binding.bottomNavigation.setOnItemReselectedListener { item ->
+//            when(item.itemId) {
+//                R.id.mainFragment -> {
+//                    Log.d("MyHelper", "reselect")
+//                }
+//            }
+//        }
     }
-}
 
-private fun FragmentManager.switchFragments(tag: String) {
-    commit {
-        fragments.forEach { hide(it) }
-        show(findFragmentByTag(tag)!!)
+    override fun show() {
+//        binding.bottomNavigation.visibility = View.GONE
+        binding.bottomNavigation.animate()
+            .translationY(0f)
+            .setDuration(500)
+            .start()
+    }
+
+    override fun hide() {
+        binding.bottomNavigation.animate()
+            .translationY(binding.bottomNavigation.height.toFloat())
+            .setDuration(500)
+            .start()
+//        binding.bottomNavigation.visibility = View.VISIBLE
+
     }
 }

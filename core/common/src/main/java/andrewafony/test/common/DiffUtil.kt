@@ -1,6 +1,6 @@
-package andrewafony.test.wallpaperapp.presentation
+package andrewafony.test.common
 
-import andrewafony.test.wallpaperapp.domain.model.Wallpaper
+import andrewafony.test.domain.model.Wallpaper
 import androidx.recyclerview.widget.DiffUtil
 
 object DiffUtilCallback : DiffUtil.ItemCallback<Wallpaper>() {

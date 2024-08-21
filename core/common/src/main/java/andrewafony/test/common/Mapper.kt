@@ -1,10 +1,6 @@
-package andrewafony.test.wallpaperapp.core
+package andrewafony.test.common
 
-
-/**
- * @param R result type
- */
-interface Mapper<R> {
+interface MapperTo<R> {
 
     fun map() : R
 }

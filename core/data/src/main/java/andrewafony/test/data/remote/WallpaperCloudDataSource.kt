@@ -1,9 +1,4 @@
-package andrewafony.test.wallpaperapp.data.remote
-
-import andrewafony.test.wallpaperapp.data.remote.model.WallpapersSearchResponse
-import android.util.Log
-import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
+package andrewafony.test.data.remote
 
 interface WallpaperCloudDataSource {
 
@@ -11,15 +6,15 @@ interface WallpaperCloudDataSource {
         query: String?,
         ratio: Ratio?,
         page: Int,
-    ): WallpapersSearchResponse
+    ): andrewafony.test.data.remote.model.WallpapersSearchResponse
 
-    class Base @Inject constructor(private val service: WallpapersApi) : WallpaperCloudDataSource {
+    class Base (private val service: WallpapersApi) : WallpaperCloudDataSource {
 
         override suspend fun search(
             query: String?,
             ratio: Ratio?,
             page: Int,
-        ): WallpapersSearchResponse {
+        ): andrewafony.test.data.remote.model.WallpapersSearchResponse {
             return service.search(query, ratio, page)
         }
     }

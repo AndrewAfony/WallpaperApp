@@ -1,9 +1,8 @@
-package andrewafony.test.wallpaperapp.domain.repository
+package andrewafony.test.domain.repository
 
-import Wallpaper
+import andrewafony.test.domain.model.Wallpaper
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
-
 
 interface WallpaperRepository {
 

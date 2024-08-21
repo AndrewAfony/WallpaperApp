@@ -1,12 +1,13 @@
-package andrewafony.test.wallpaperapp.presentation
+package andrewafony.test.wallpaper_saved
 
-import andrewafony.test.wallpaperapp.databinding.WallpaperItemBinding
-import andrewafony.test.wallpaperapp.domain.model.Wallpaper
+import andrewafony.test.common.DiffUtilCallback
+import andrewafony.test.common.WallpaperPayloads
+import andrewafony.test.common.WallpaperViewHolder
+import andrewafony.test.common.databinding.WallpaperItemBinding
+import andrewafony.test.domain.model.Wallpaper
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 
 class SavedWallpaperAdapter(
     private val onClick: (Wallpaper) -> Unit,

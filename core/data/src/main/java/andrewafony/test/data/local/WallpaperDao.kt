@@ -1,6 +1,6 @@
-package andrewafony.test.wallpaperapp.data.local
+package andrewafony.test.data.local
 
-import andrewafony.test.wallpaperapp.data.local.entities.WallpaperEntity
+import andrewafony.test.data.local.entities.WallpaperEntity
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert

@@ -1,10 +1,9 @@
-package andrewafony.test.wallpaperapp.data
+package andrewafony.test.data
 
-import andrewafony.test.wallpaperapp.data.remote.Ratio
-import andrewafony.test.wallpaperapp.data.remote.WallpaperCloudDataSource
-import andrewafony.test.wallpaperapp.data.remote.model.asWallpaper
-import andrewafony.test.wallpaperapp.domain.model.Wallpaper
-import android.util.Log
+import andrewafony.test.data.remote.Ratio
+import andrewafony.test.data.remote.WallpaperCloudDataSource
+import andrewafony.test.data.remote.model.asWallpaper
+import andrewafony.test.domain.model.Wallpaper
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 

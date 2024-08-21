@@ -1,41 +1,42 @@
-package andrewafony.test.wallpaperapp.presentation
+package andrewafony.test.wallpaper_saved
 
-import andrewafony.test.wallpaperapp.databinding.FragmentSavedWallpapersBinding
+import andrewafony.test.common.BaseFragment
+import andrewafony.test.wallpaper_saved.databinding.FragmentSavedWallpapersBinding
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SavedWallpapersFragment : andrewafony.test.common.BaseFragment<FragmentSavedWallpapersBinding>(true) {
+class SavedWallpapersFragment : BaseFragment<FragmentSavedWallpapersBinding>(true) {
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSavedWallpapersBinding
         get() = FragmentSavedWallpapersBinding::inflate
 
     private lateinit var adapter: SavedWallpaperAdapter
 
-    private val viewModel by activityViewModels<MainViewModel>()
+    private val savedViewModel by viewModel<SavedWallpapersViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = SavedWallpaperAdapter(
             onClick = {
-                viewModel.openWallpaper(it)
+//                viewModel.openWallpaper(it)
             },
-            onToggleFavorite = viewModel::toggleFavorite
+            onToggleFavorite = savedViewModel::toggleFavorite
         )
 
-        andrewafony.test.common.BaseFragment.binding.rvSavedWallpapers.adapter = adapter
+        binding.rvSavedWallpapers.adapter = adapter
 
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.savedWallpapers.collectLatest { adapter.map(it) }
+                savedViewModel.savedWallpapers.collectLatest { adapter.map(it) }
             }
         }
     }

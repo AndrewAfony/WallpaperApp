@@ -1,10 +1,9 @@
-package andrewafony.test.wallpaperapp.data.local
+package andrewafony.test.data.local
 
-import andrewafony.test.wallpaperapp.data.local.entities.WallpaperEntity
-import androidx.room.Database
+import andrewafony.test.data.local.entities.WallpaperEntity
 import androidx.room.RoomDatabase
 
-@Database(
+@androidx.room.Database(
     entities = [WallpaperEntity::class],
     version = 1
 )

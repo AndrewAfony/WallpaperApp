@@ -1,7 +1,7 @@
-package andrewafony.test.wallpaperapp.data.remote.model
+package andrewafony.test.data.remote.model
 
-import andrewafony.test.wallpaperapp.data.local.entities.WallpaperEntity
-import andrewafony.test.wallpaperapp.domain.model.Wallpaper
+import andrewafony.test.data.local.entities.WallpaperEntity
+import andrewafony.test.domain.model.Wallpaper
 import kotlinx.serialization.Serializable
 
 @Serializable

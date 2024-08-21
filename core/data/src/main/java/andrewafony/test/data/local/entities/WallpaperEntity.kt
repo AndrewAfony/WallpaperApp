@@ -1,6 +1,6 @@
-package andrewafony.test.wallpaperapp.data.local.entities
+package andrewafony.test.data.local.entities
 
-import andrewafony.test.wallpaperapp.domain.model.Wallpaper
+import andrewafony.test.domain.model.Wallpaper
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -14,10 +14,22 @@ data class WallpaperEntity(
     val favorites: Int,
     val size: String,
     val resolution: String,
-    val isSaved: Boolean
+    val isSaved: Boolean,
 )
 
-fun WallpaperEntity.asWallpaper() = Wallpaper(
+fun Wallpaper.toEntity() = WallpaperEntity(
+    id = id,
+    url = url,
+    category = category,
+    source = source,
+    views = views,
+    favorites = favorites,
+    size = size,
+    resolution = resolution,
+    isSaved = isSaved
+)
+
+fun WallpaperEntity.toWallpaper() = Wallpaper(
     id = id,
     url = url,
     category = category,

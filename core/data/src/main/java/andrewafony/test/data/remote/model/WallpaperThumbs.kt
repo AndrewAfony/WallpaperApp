@@ -1,8 +1,8 @@
-package andrewafony.test.wallpaperapp.data.remote.model
+package andrewafony.test.data.remote.model
 
 import kotlinx.serialization.Serializable
 
-@Serializable
+@kotlinx.serialization.Serializable
 data class WallpaperThumbs(
     val large: String,
     val original: String,

@@ -1,8 +1,7 @@
-package andrewafony.test.wallpaper_saved
+package andrewafony.test.wallpaper_detail
 
 import andrewafony.test.common.BaseFragment
-import andrewafony.test.wallpaper_saved.databinding.FragmentDetailWallpaperBinding
-import andrewafony.test.wallpaperapp.domain.ImageSaver
+import andrewafony.test.wallpaper_detail.databinding.FragmentDetailWallpaperBinding
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +11,7 @@ import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -26,7 +26,7 @@ class DetailWallpaperFragment : BaseFragment<FragmentDetailWallpaperBinding>(
     showBottomNavigation = false
 ) {
 
-    private val viewModel by activityViewModels<MainViewModel>()
+//    private val viewModel by viewModels<SavedWallpapersViewModel>()
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentDetailWallpaperBinding
         get() = FragmentDetailWallpaperBinding::inflate
@@ -36,46 +36,46 @@ class DetailWallpaperFragment : BaseFragment<FragmentDetailWallpaperBinding>(
 
         postponeEnterTransition()
 
-        lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.currentWallpaper.collectLatest { wallpaper ->
-                    binding.fullWallpaper.load(wallpaper?.url) {
-                        placeholderMemoryCacheKey(wallpaper?.url)
-                        crossfade(true)
-                        allowHardware(false)
-                        listener(
-                            onError = { _, _ ->
-                                startPostponedEnterTransition()
-                            },
-                            onSuccess = { _, result ->
-                                androidx.palette.graphics.Palette.Builder(result.image.toBitmap()).generate { palette ->
-                                    palette?.getDominantColor(Color.WHITE)?.let {
-                                        binding.root.setBackgroundColor(it)
-                                        binding.buttonBack.setButtonColor(it)
-                                    }
-                                }
-                                startPostponedEnterTransition()
-                            }
-                        )
-                    }
-
-                    binding.buttonInfo.setOnClickListener {
-                        WallpaperInfoBottomSheetFragment.Companion.open(parentFragmentManager, wallpaper)
-                    }
-                }
-            }
-        }
-
-        binding.buttonDownload.setOnClickListener {
-            lifecycleScope.launch(Dispatchers.IO) {
-                val bitmap = binding.fullWallpaper.drawable.toBitmap()
-                ImageSaver.saveImageToGallery(
-                    requireContext(),
-                    bitmap,
-                    "wallpaper_${System.currentTimeMillis()}"
-                )
-            }
-        }
+//        lifecycleScope.launch {
+//            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                viewModel.currentWallpaper.collectLatest { wallpaper ->
+//                    binding.fullWallpaper.load(wallpaper?.url) {
+//                        placeholderMemoryCacheKey(wallpaper?.url)
+//                        crossfade(true)
+//                        allowHardware(false)
+//                        listener(
+//                            onError = { _, _ ->
+//                                startPostponedEnterTransition()
+//                            },
+//                            onSuccess = { _, result ->
+//                                androidx.palette.graphics.Palette.Builder(result.image.toBitmap()).generate { palette ->
+//                                    palette?.getDominantColor(Color.WHITE)?.let {
+//                                        binding.root.setBackgroundColor(it)
+//                                        binding.buttonBack.setButtonColor(it)
+//                                    }
+//                                }
+//                                startPostponedEnterTransition()
+//                            }
+//                        )
+//                    }
+//
+//                    binding.buttonInfo.setOnClickListener {
+//                        WallpaperInfoBottomSheetFragment.Companion.open(parentFragmentManager, wallpaper)
+//                    }
+//                }
+//            }
+//        }
+//
+//        binding.buttonDownload.setOnClickListener {
+//            lifecycleScope.launch(Dispatchers.IO) {
+//                val bitmap = binding.fullWallpaper.drawable.toBitmap()
+//                ImageSaver.saveImageToGallery(
+//                    requireContext(),
+//                    bitmap,
+//                    "wallpaper_${System.currentTimeMillis()}"
+//                )
+//            }
+//        }
 
         binding.buttonBack.setOnClickListener {
             parentFragmentManager.popBackStack()

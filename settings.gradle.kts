@@ -1,4 +1,5 @@
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         google {
             content {
@@ -20,5 +21,13 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "WallpaperApp"
+
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 include(":app")
- 
+include(":features:wallpaper-search")
+include(":features:wallpaper-saved")
+include(":core:common")
+include(":features:wallpaper-detail")
+include(":core:domain")
+include(":core:data")

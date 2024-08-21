@@ -1,15 +1,11 @@
-package andrewafony.test.wallpaperapp.core
+package andrewafony.test.common
 
-import andrewafony.test.wallpaperapp.R
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 abstract class BaseFragment<VB : ViewBinding>(
     private val showBottomNavigation: Boolean
@@ -32,13 +28,13 @@ abstract class BaseFragment<VB : ViewBinding>(
     override fun onResume() {
         super.onResume()
         if (!showBottomNavigation)
-            requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.GONE
+            (requireActivity() as BottomNavigationController).hide()
     }
 
     override fun onPause() {
         super.onPause()
         if (!showBottomNavigation)
-            requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.VISIBLE
+            (requireActivity() as BottomNavigationController).show()
     }
 
     override fun onDestroyView() {

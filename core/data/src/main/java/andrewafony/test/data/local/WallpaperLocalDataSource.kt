@@ -1,8 +1,7 @@
-package andrewafony.test.wallpaperapp.data.local
+package andrewafony.test.data.local
 
-import andrewafony.test.wallpaperapp.data.local.entities.WallpaperEntity
+import andrewafony.test.data.local.entities.WallpaperEntity
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
 interface WallpaperLocalDataSource {
 
@@ -16,7 +15,7 @@ interface WallpaperLocalDataSource {
 
     suspend fun exists(id: String) : Boolean
 
-    class Base @Inject constructor (private val dao: WallpaperDao) : WallpaperLocalDataSource {
+    class Base (private val dao: WallpaperDao) : WallpaperLocalDataSource {
 
         override fun wallpapers(): Flow<List<WallpaperEntity>> = dao.wallpapers()
 

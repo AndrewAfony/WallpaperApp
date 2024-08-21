@@ -1,7 +1,7 @@
-package andrewafony.test.wallpaperapp.presentation
+package andrewafony.test.wallpaper_detail
 
-import andrewafony.test.wallpaperapp.databinding.WallpaperInfoBottomSheetDialogBinding
-import andrewafony.test.wallpaperapp.domain.model.Wallpaper
+import andrewafony.test.domain.model.Wallpaper
+import andrewafony.test.wallpaper_detail.databinding.WallpaperInfoBottomSheetDialogBinding
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

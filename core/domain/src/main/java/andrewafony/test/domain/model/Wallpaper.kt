@@ -1,6 +1,4 @@
-package andrewafony.test.wallpaperapp.domain.model
-
-import andrewafony.test.wallpaperapp.data.local.entities.WallpaperEntity
+package andrewafony.test.domain.model
 
 data class Wallpaper(
     val id: String,
@@ -12,16 +10,4 @@ data class Wallpaper(
     val size: String,
     val resolution: String,
     val isSaved: Boolean
-)
-
-fun Wallpaper.asEntity() = WallpaperEntity(
-    id = id,
-    url = url,
-    category = category,
-    source = source,
-    views = views,
-    favorites = favorites,
-    size = size,
-    resolution = resolution,
-    isSaved = isSaved
 )

@@ -1,8 +1,10 @@
 [versions]
 agp = "8.6.1"
 coil = "3.0.2"
+gradle = "8.6.1"
+koinAndroid = "4.0.0"
+kotlin = "2.0.21"
 hiltAndroid = "2.51.1"
-kotlin = "1.9.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -12,6 +14,7 @@ material = "1.12.0"
 activity = "1.9.3"
 constraintlayout = "2.2.0"
 kotlinxSerializationJson = "1.7.3"
+navigationFragmentKtx = "2.8.4"
 okhttp = "4.11.0"
 pagingRuntimeKtx = "3.3.2"
 retrofit2KotlinxSerializationConverter = "1.0.0"
@@ -23,10 +26,16 @@ kotlinxCoroutines = "1.9.0"
 hilt-plagin = "2.51.1"
 ksp-version = "2.0.21-1.0.26"
 paletteKtx = "1.0.0"
+lifecycleRuntimeKtx = "2.8.7"
+palette = "1.0.0"
+pagingRuntime = "3.3.2"
+pagingCommonAndroid = "3.3.2"
 
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
+androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationFragmentKtx" }
 androidx-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", version.ref = "pagingRuntimeKtx" }
 androidx-paging-testing = { module = "androidx.paging:paging-testing", version.ref = "pagingRuntimeKtx" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
@@ -38,6 +47,7 @@ androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltAndroid" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinAndroid" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -50,12 +60,20 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 retrofit2-kotlinx-serialization-converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofit2KotlinxSerializationConverter" }
 androidx-palette-ktx = { group = "androidx.palette", name = "palette-ktx", version.ref = "paletteKtx" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+androidx-palette = { group = "androidx.palette", name = "palette", version.ref = "palette" }
+androidx-paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "pagingRuntime" }
+androidx-paging-common-android = { group = "androidx.paging", name = "paging-common-android", version.ref = "pagingCommonAndroid" }
 
+build-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
+kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 serialization = {id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "serialization"}
-hilt-plagin = { id = "com.google.dagger.hilt.android", version.ref = "hilt-plagin"}
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp-version"}
 
+wallpaper-android-plugin = { id = "andrewafony.test.plugin.android", version = "agp" }
+wallpaper-feature-plugin = { id = "andrewafony.test.plugin.feature", version = "unspecified" }

@@ -1,21 +1,13 @@
-package andrewafony.test.wallpaperapp.data.remote
-
-import andrewafony.test.wallpaperapp.data.remote.model.WallpapersSearchResponse
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import kotlinx.serialization.json.Json
-import okhttp3.MediaType.Companion.toMediaType
-import retrofit2.Retrofit
-import retrofit2.http.GET
-import retrofit2.http.Query
+package andrewafony.test.data.remote
 
 interface WallpapersApi {
 
-    @GET("search")
+    @retrofit2.http.GET("search")
     suspend fun search(
-        @Query("q") query: String? = null,
-        @Query("ratios") ratio: Ratio? = Ratio.PORTRAIT,
-        @Query("page") page: Int = 1
-    ): WallpapersSearchResponse
+        @retrofit2.http.Query("q") query: String? = null,
+        @retrofit2.http.Query("ratios") ratio: Ratio? = Ratio.PORTRAIT,
+        @retrofit2.http.Query("page") page: Int = 1
+    ): andrewafony.test.data.remote.model.WallpapersSearchResponse
 }
 
 enum class Ratio(val ratio: String) {
