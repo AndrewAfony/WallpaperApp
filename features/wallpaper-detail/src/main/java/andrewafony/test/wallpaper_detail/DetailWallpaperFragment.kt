@@ -65,17 +65,17 @@ class DetailWallpaperFragment : BaseFragment<FragmentDetailWallpaperBinding>(
 //                }
 //            }
 //        }
-//
-//        binding.buttonDownload.setOnClickListener {
-//            lifecycleScope.launch(Dispatchers.IO) {
-//                val bitmap = binding.fullWallpaper.drawable.toBitmap()
-//                ImageSaver.saveImageToGallery(
-//                    requireContext(),
-//                    bitmap,
-//                    "wallpaper_${System.currentTimeMillis()}"
-//                )
-//            }
-//        }
+
+        binding.buttonDownload.setOnClickListener {
+            lifecycleScope.launch(Dispatchers.IO) {
+                val bitmap = binding.fullWallpaper.drawable.toBitmap()
+                ImageSaver.saveImageToGallery(
+                    requireContext(),
+                    bitmap,
+                    "wallpaper_${System.currentTimeMillis()}"
+                )
+            }
+        }
 
         binding.buttonBack.setOnClickListener {
             parentFragmentManager.popBackStack()

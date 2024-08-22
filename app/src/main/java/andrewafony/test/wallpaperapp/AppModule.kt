@@ -1,4 +1,4 @@
-package andrewafony.test.wallpaperapp.di
+package andrewafony.test.wallpaperapp
 
 import org.koin.dsl.module
 

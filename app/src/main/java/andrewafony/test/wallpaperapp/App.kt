@@ -3,7 +3,6 @@ package andrewafony.test.wallpaperapp
 import andrewafony.test.data.di.dataModule
 import andrewafony.test.wallpaper_saved.savedWallpapersModule
 import andrewafony.test.wallpaper_search.searchWallpapersModule
-import andrewafony.test.wallpaperapp.di.appModule
 import android.app.Application
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy

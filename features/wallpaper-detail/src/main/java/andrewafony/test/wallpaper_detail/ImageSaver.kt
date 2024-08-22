@@ -1,4 +1,4 @@
-package andrewafony.test.wallpaperapp.domain
+package andrewafony.test.wallpaper_detail
 
 import android.Manifest
 import android.app.Activity
