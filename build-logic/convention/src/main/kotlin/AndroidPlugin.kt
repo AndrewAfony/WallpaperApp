@@ -15,14 +15,9 @@ class AndroidPlugin : Plugin<Project> {
                 apply("org.jetbrains.kotlin.android")
             }
             extensions.configure<ApplicationExtension> {
-                compileSdk = 34
+                configureKotlinAndroid(this)
                 defaultConfig.apply {
                     targetSdk = 34
-                    minSdk = 23
-                }
-                compileOptions {
-                    sourceCompatibility = JavaVersion.VERSION_17
-                    targetCompatibility = JavaVersion.VERSION_17
                 }
                 buildFeatures {
                     viewBinding = true

@@ -21,10 +21,13 @@ import coil3.request.crossfade
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 
 class DetailWallpaperFragment : BaseFragment<FragmentDetailWallpaperBinding>(
     showBottomNavigation = false
 ) {
+
+    private val imageSaver: ImageSaver by inject()
 
 //    private val viewModel by viewModels<SavedWallpapersViewModel>()
 
@@ -69,7 +72,7 @@ class DetailWallpaperFragment : BaseFragment<FragmentDetailWallpaperBinding>(
         binding.buttonDownload.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
                 val bitmap = binding.fullWallpaper.drawable.toBitmap()
-                ImageSaver.saveImageToGallery(
+                imageSaver.saveImageToGallery(
                     requireContext(),
                     bitmap,
                     "wallpaper_${System.currentTimeMillis()}"

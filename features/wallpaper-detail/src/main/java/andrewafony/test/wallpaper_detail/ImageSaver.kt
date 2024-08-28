@@ -17,8 +17,7 @@ import java.io.IOException
 import java.io.OutputStream
 
 
-object ImageSaver {
-    private const val REQUEST_CODE_STORAGE_PERMISSION = 123
+internal class ImageSaver {
 
     fun saveImageToGallery(context: Context, bitmap: Bitmap, fileName: String) {
         // todo При первом запросе нужно нажимать два раза
@@ -93,5 +92,10 @@ object ImageSaver {
         } catch (e: IOException) {
             e.printStackTrace()
         }
+    }
+
+    companion object {
+
+        private const val REQUEST_CODE_STORAGE_PERMISSION = 123
     }
 }

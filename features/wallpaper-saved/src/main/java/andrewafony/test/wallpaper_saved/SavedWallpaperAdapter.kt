@@ -9,7 +9,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 
-class SavedWallpaperAdapter(
+internal class SavedWallpaperAdapter(
     private val onClick: (Wallpaper) -> Unit,
     private val onToggleFavorite: (Wallpaper) -> Unit,
 ) : ListAdapter<Wallpaper, WallpaperViewHolder>(DiffUtilCallback) {

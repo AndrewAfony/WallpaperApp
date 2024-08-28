@@ -1,13 +1,17 @@
 package andrewafony.test.data.remote
 
+import andrewafony.test.data.remote.model.WallpapersSearchResponse
+import retrofit2.http.GET
+import retrofit2.http.Query
+
 interface WallpapersApi {
 
-    @retrofit2.http.GET("search")
+    @GET("search")
     suspend fun search(
-        @retrofit2.http.Query("q") query: String? = null,
-        @retrofit2.http.Query("ratios") ratio: Ratio? = Ratio.PORTRAIT,
-        @retrofit2.http.Query("page") page: Int = 1
-    ): andrewafony.test.data.remote.model.WallpapersSearchResponse
+        @Query("q") query: String? = null,
+        @Query("ratios") ratio: Ratio? = Ratio.PORTRAIT,
+        @Query("page") page: Int = 1
+    ): WallpapersSearchResponse
 }
 
 enum class Ratio(val ratio: String) {

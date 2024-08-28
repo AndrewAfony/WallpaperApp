@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class WallpaperRepositoryImpl(
+internal class WallpaperRepositoryImpl(
     private val cloudDataSource: WallpaperCloudDataSource,
     private val localDataSource: WallpaperLocalDataSource
 ) : WallpaperRepository {

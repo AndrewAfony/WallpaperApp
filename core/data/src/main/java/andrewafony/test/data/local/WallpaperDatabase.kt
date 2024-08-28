@@ -1,13 +1,14 @@
 package andrewafony.test.data.local
 
 import andrewafony.test.data.local.entities.WallpaperEntity
+import androidx.room.Database
 import androidx.room.RoomDatabase
 
-@androidx.room.Database(
+@Database(
     entities = [WallpaperEntity::class],
     version = 1
 )
-abstract class WallpaperDatabase: RoomDatabase() {
+internal abstract class WallpaperDatabase: RoomDatabase() {
 
     abstract fun wallpaperDao(): WallpaperDao
 }

@@ -3,7 +3,7 @@ package andrewafony.test.data.local
 import andrewafony.test.data.local.entities.WallpaperEntity
 import kotlinx.coroutines.flow.Flow
 
-interface WallpaperLocalDataSource {
+internal interface WallpaperLocalDataSource {
 
     fun wallpapers(): Flow<List<WallpaperEntity>>
 

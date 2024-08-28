@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class SavedWallpapersViewModel(
+internal class SavedWallpapersViewModel(
     private val repository: WallpaperRepository
 ): ViewModel() {
 

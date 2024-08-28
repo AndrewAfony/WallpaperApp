@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
-class SearchViewModel(
+internal class SearchViewModel(
     private val repository: WallpaperRepository,
     private val savedStateHandle: SavedStateHandle,
 ): ViewModel() {

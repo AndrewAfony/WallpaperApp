@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class WallpaperInfoBottomSheetFragment(
+internal class WallpaperInfoBottomSheetFragment(
     private val wallpaper: Wallpaper?
 ): BottomSheetDialogFragment() {
 
