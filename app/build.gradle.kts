@@ -36,34 +36,13 @@ dependencies {
     implementation(projects.core.data)
 //    implementation(projects.core.common)
 
-//    implementation(libs.androidx.core.ktx)
-//    implementation(libs.androidx.appcompat)
-//    implementation(libs.material)
-    implementation(libs.androidx.activity)
-    implementation(libs.androidx.constraintlayout)
-    implementation(libs.androidx.palette.ktx)
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-//    implementation(libs.retrofit)
-//    implementation(libs.kotlinx.serialization.json)
-//    implementation(libs.retrofit2.kotlinx.serialization.converter)
-//    implementation(libs.okhttp)
+    testImplementation(libs.koin.test.junit4)
 
-    implementation(libs.coil)
-    implementation(libs.coil.network.okhttp)
-
-    implementation(libs.androidx.fragment.ktx)
-
-//    implementation(libs.androidx.paging.runtime.ktx)
-    implementation(libs.androidx.paging.testing)
-
-//    implementation(libs.androidx.room.runtime)
-//    implementation(libs.androidx.room.ktx)
-//    ksp(libs.androidx.room.compiler)
-
-    implementation("com.github.terrakok:cicerone:7.1")
+//    implementation("com.github.terrakok:cicerone:7.1")
 }

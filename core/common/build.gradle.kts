@@ -13,6 +13,10 @@ dependencies {
     api(libs.androidx.core.ktx)
     api(libs.androidx.appcompat)
     api(libs.material)
+    api(libs.androidx.activity)
+    api(libs.androidx.constraintlayout)
+
+    api(libs.androidx.palette.ktx)
 
     // ==== Coil ====
     api(libs.coil)

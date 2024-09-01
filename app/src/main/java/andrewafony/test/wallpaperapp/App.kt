@@ -1,9 +1,5 @@
 package andrewafony.test.wallpaperapp
 
-import andrewafony.test.data.di.dataModule
-import andrewafony.test.wallpaper_detail.wallpaperDetailModule
-import andrewafony.test.wallpaper_saved.savedWallpapersModule
-import andrewafony.test.wallpaper_search.searchWallpapersModule
 import android.app.Application
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
@@ -20,10 +16,7 @@ class App : Application() {
         startKoin {
             androidLogger()
             androidContext(this@App)
-            modules(
-                appModule, dataModule, searchWallpapersModule, savedWallpapersModule,
-                wallpaperDetailModule
-            )
+            modules(appModule)
         }
 
         if (BuildConfig.DEBUG) {

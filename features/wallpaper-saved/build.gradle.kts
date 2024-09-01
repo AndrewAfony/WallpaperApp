@@ -11,5 +11,5 @@ dependencies {
 
     implementation(projects.core.common)
 
-    implementation(libs.androidx.palette)
+//    implementation(libs.androidx.palette)
 }

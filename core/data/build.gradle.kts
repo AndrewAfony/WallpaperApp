@@ -12,7 +12,6 @@ android {
 dependencies {
 
     implementation(projects.core.common)
-    implementation(projects.core.domain)
 
     // ==== Retrofit ====
     implementation(libs.retrofit)
