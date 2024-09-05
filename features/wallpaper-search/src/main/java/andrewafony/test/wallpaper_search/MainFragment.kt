@@ -9,15 +9,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doOnTextChanged
-import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class MainFragment : BaseFragment<FragmentMainBinding>(true) {
 
     private val searchViewModel by viewModel<SearchViewModel>()
+
+    private val navigation: SearchScreenNavigation by inject { parametersOf(parentFragmentManager) }
 
     private lateinit var adapter: WallpaperAdapter
 
@@ -32,17 +35,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(true) {
         }
 
         adapter = WallpaperAdapter(
-            onClick = { wallpaper ->
-                searchViewModel.openWallpaper(wallpaper)
-//                parentFragmentManager.commit {
-//                    setReorderingAllowed(true)
-//                    add(
-//                        andrewafony.test.wallpaperapp.R.id.container,
-//                        DetailWallpaperFragment()
-//                    )
-//                    addToBackStack(null)
-//                }
-            },
+            onClick = { wallpaper -> navigation.navigateToDetail(wallpaper.url) },
             onToggleFavorite = searchViewModel::toggleFavorite
         )
 
@@ -54,7 +47,8 @@ class MainFragment : BaseFragment<FragmentMainBinding>(true) {
                     if (loadState.refresh is androidx.paging.LoadState.Loading) View.VISIBLE else View.GONE
                 if (loadState.refresh is androidx.paging.LoadState.Error) {
                     binding.errorText.visibility = View.VISIBLE
-                    binding.errorText.text = (loadState.refresh as androidx.paging.LoadState.Error).error.message
+                    binding.errorText.text =
+                        (loadState.refresh as androidx.paging.LoadState.Error).error.message
                 } else
                     binding.errorText.visibility = View.GONE
             }

@@ -11,6 +11,7 @@ val appModule = module {
         dataModule,
         searchWallpapersModule,
         savedWallpapersModule,
-        wallpaperDetailModule
+        wallpaperDetailModule,
+        navigationModule
     )
 }

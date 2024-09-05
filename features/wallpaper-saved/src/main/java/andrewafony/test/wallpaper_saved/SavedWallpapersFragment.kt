@@ -11,7 +11,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class SavedWallpapersFragment : BaseFragment<FragmentSavedWallpapersBinding>(true) {
 
@@ -20,15 +22,15 @@ class SavedWallpapersFragment : BaseFragment<FragmentSavedWallpapersBinding>(tru
 
     private lateinit var adapter: SavedWallpaperAdapter
 
+    private val navigation: SavedWallpapersNavigation by inject { parametersOf(parentFragmentManager) }
+
     private val savedViewModel by viewModel<SavedWallpapersViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = SavedWallpaperAdapter(
-            onClick = {
-//                viewModel.openWallpaper(it)
-            },
+            onClick = { wallpaper -> navigation.navigateToDetail(wallpaper.url) },
             onToggleFavorite = savedViewModel::toggleFavorite
         )
 

@@ -19,13 +19,10 @@ import kotlinx.coroutines.launch
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 internal class SearchViewModel(
     private val repository: WallpaperRepository,
-    private val savedStateHandle: SavedStateHandle,
+    private val savedStateHandle: SavedStateHandle
 ): ViewModel() {
 
     private val searchQuery = savedStateHandle.getStateFlow(SEARCH_QUERY, "")
-
-    private val _currentWallpaper = MutableStateFlow<Wallpaper?>(null)
-    val currentWallpaper: StateFlow<Wallpaper?> = _currentWallpaper
 
     val wallpapers = searchQuery
         .debounce { query -> if (query.isNotEmpty()) 500 else 0 }
@@ -41,10 +38,6 @@ internal class SearchViewModel(
 
     fun onSearch(query: String) {
         savedStateHandle[SEARCH_QUERY] = query
-    }
-
-    fun openWallpaper(wallpaper: Wallpaper) {
-        _currentWallpaper.value = wallpaper
     }
 
     fun toggleFavorite(wallpaper: Wallpaper) {

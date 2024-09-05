@@ -18,18 +18,15 @@ import androidx.lifecycle.repeatOnLifecycle
 import coil3.load
 import coil3.request.allowHardware
 import coil3.request.crossfade
+import coil3.toBitmap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
-class DetailWallpaperFragment : BaseFragment<FragmentDetailWallpaperBinding>(
-    showBottomNavigation = false
-) {
+class DetailWallpaperFragment : BaseFragment<FragmentDetailWallpaperBinding>(showBottomNavigation = false) {
 
     private val imageSaver: ImageSaver by inject()
-
-//    private val viewModel by viewModels<SavedWallpapersViewModel>()
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentDetailWallpaperBinding
         get() = FragmentDetailWallpaperBinding::inflate
@@ -39,34 +36,30 @@ class DetailWallpaperFragment : BaseFragment<FragmentDetailWallpaperBinding>(
 
         postponeEnterTransition()
 
-//        lifecycleScope.launch {
-//            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-//                viewModel.currentWallpaper.collectLatest { wallpaper ->
-//                    binding.fullWallpaper.load(wallpaper?.url) {
-//                        placeholderMemoryCacheKey(wallpaper?.url)
-//                        crossfade(true)
-//                        allowHardware(false)
-//                        listener(
-//                            onError = { _, _ ->
-//                                startPostponedEnterTransition()
-//                            },
-//                            onSuccess = { _, result ->
-//                                androidx.palette.graphics.Palette.Builder(result.image.toBitmap()).generate { palette ->
-//                                    palette?.getDominantColor(Color.WHITE)?.let {
-//                                        binding.root.setBackgroundColor(it)
-//                                        binding.buttonBack.setButtonColor(it)
-//                                    }
-//                                }
-//                                startPostponedEnterTransition()
-//                            }
-//                        )
-//                    }
-//
-//                    binding.buttonInfo.setOnClickListener {
-//                        WallpaperInfoBottomSheetFragment.Companion.open(parentFragmentManager, wallpaper)
-//                    }
-//                }
-//            }
+        val url = arguments?.getString("url")
+
+        binding.fullWallpaper.load(url) {
+            placeholderMemoryCacheKey(url)
+            crossfade(true)
+            allowHardware(false)
+            listener(
+                onError = { _, _ ->
+                    startPostponedEnterTransition()
+                },
+                onSuccess = { _, result ->
+                    androidx.palette.graphics.Palette.Builder(result.image.toBitmap()).generate { palette ->
+                        palette?.getDominantColor(Color.WHITE)?.let {
+                            binding.root.setBackgroundColor(it)
+                            binding.buttonBack.setButtonColor(it)
+                        }
+                    }
+                    startPostponedEnterTransition()
+                }
+            )
+        }
+
+//        binding.buttonInfo.setOnClickListener {
+//            WallpaperInfoBottomSheetFragment.Companion.open(parentFragmentManager, wallpaper)
 //        }
 
         binding.buttonDownload.setOnClickListener {
