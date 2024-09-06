@@ -9,9 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-internal class WallpaperInfoBottomSheetFragment(
-    private val wallpaper: Wallpaper?
-): BottomSheetDialogFragment() {
+internal class WallpaperInfoBottomSheetFragment: BottomSheetDialogFragment() {
 
     private var _binding: WallpaperInfoBottomSheetDialogBinding? = null
     private val binding get() = _binding!!
@@ -47,9 +45,7 @@ internal class WallpaperInfoBottomSheetFragment(
     companion object {
 
         fun open(
-            fragmentManager: FragmentManager,
-            wallpaper: Wallpaper?
-        ) =
-            WallpaperInfoBottomSheetFragment(wallpaper).show(fragmentManager, "wallpaper_info")
+            fragmentManager: FragmentManager
+        ) = WallpaperInfoBottomSheetFragment().show(fragmentManager, "wallpaper_info")
     }
 }

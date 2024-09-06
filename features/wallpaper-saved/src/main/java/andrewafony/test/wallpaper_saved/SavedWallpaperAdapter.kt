@@ -8,6 +8,7 @@ import andrewafony.test.domain.model.Wallpaper
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
+import coil3.memory.MemoryCache
 
 internal class SavedWallpaperAdapter(
     private val onClick: (Wallpaper) -> Unit,

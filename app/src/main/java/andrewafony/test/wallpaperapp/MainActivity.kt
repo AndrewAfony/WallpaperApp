@@ -2,6 +2,7 @@ package andrewafony.test.wallpaperapp
 
 import andrewafony.test.common.BottomNavigationController
 import andrewafony.test.wallpaperapp.databinding.ActivityMainBinding
+import android.animation.Animator
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -38,6 +39,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationController {
 
     override fun show() {
         binding.bottomNavigation.visibility = View.VISIBLE
+
     }
 
     override fun hide() {

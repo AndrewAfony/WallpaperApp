@@ -2,13 +2,17 @@ package andrewafony.test.common
 
 import andrewafony.test.common.databinding.WallpaperItemBinding
 import andrewafony.test.domain.model.Wallpaper
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil3.load
+import coil3.memory.MemoryCache
 import coil3.request.crossfade
+import coil3.request.error
 import coil3.request.placeholder
 import coil3.size.Dimension
 
@@ -55,7 +59,7 @@ class WallpaperViewHolder(
         with(binding.wallpaper) {
             scaleType = ImageView.ScaleType.CENTER_CROP
             load(wallpaper.url) {
-                memoryCacheKey(wallpaper.url)
+                error(ColorDrawable(Color.RED))
                 size(Dimension.Pixels(250), Dimension.Undefined)
                 crossfade(true)
             }

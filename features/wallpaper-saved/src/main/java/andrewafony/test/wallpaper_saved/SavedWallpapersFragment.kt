@@ -30,7 +30,9 @@ class SavedWallpapersFragment : BaseFragment<FragmentSavedWallpapersBinding>(tru
         super.onViewCreated(view, savedInstanceState)
 
         adapter = SavedWallpaperAdapter(
-            onClick = { wallpaper -> navigation.navigateToDetail(wallpaper.url) },
+            onClick = { wallpaper ->
+                navigation.navigateToDetail(wallpaper.url)
+            },
             onToggleFavorite = savedViewModel::toggleFavorite
         )
 

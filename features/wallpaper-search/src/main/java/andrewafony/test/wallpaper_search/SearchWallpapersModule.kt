@@ -28,6 +28,12 @@ class SearchScreenNavigationImpl(
 
     override fun navigateToDetail(url: String) = manager.commit {
         setReorderingAllowed(true)
+        setCustomAnimations(
+            andrewafony.test.common.R.anim.enter_from_right,
+            andrewafony.test.common.R.anim.exit_to_left,
+            andrewafony.test.common.R.anim.enter_from_left,
+            andrewafony.test.common.R.anim.exit_to_right
+        )
         add(container, fragment, bundleOf("url" to url))
         addToBackStack(fragment.simpleName)
     }

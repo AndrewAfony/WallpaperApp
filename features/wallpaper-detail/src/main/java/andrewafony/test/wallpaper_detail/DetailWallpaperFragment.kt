@@ -10,21 +10,18 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import androidx.core.graphics.drawable.toBitmap
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
+import androidx.palette.graphics.Palette
 import coil3.load
 import coil3.request.allowHardware
 import coil3.request.crossfade
 import coil3.toBitmap
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
-class DetailWallpaperFragment : BaseFragment<FragmentDetailWallpaperBinding>(showBottomNavigation = false) {
+class DetailWallpaperFragment :
+    BaseFragment<FragmentDetailWallpaperBinding>(showBottomNavigation = false) {
 
     private val imageSaver: ImageSaver by inject()
 
@@ -38,29 +35,29 @@ class DetailWallpaperFragment : BaseFragment<FragmentDetailWallpaperBinding>(sho
 
         val url = arguments?.getString("url")
 
+        binding.fullWallpaper.scaleType = ImageView.ScaleType.CENTER_CROP
         binding.fullWallpaper.load(url) {
-            placeholderMemoryCacheKey(url)
-            crossfade(true)
             allowHardware(false)
             listener(
                 onError = { _, _ ->
                     startPostponedEnterTransition()
                 },
                 onSuccess = { _, result ->
-                    androidx.palette.graphics.Palette.Builder(result.image.toBitmap()).generate { palette ->
-                        palette?.getDominantColor(Color.WHITE)?.let {
-                            binding.root.setBackgroundColor(it)
-                            binding.buttonBack.setButtonColor(it)
+                    Palette.Builder(result.image.toBitmap())
+                        .generate { palette ->
+                            palette?.getDominantColor(Color.WHITE)?.let {
+                                binding.root.setBackgroundColor(it)
+                                binding.buttonBack.setButtonColor(it)
+                            }
                         }
-                    }
                     startPostponedEnterTransition()
                 }
             )
         }
 
-//        binding.buttonInfo.setOnClickListener {
-//            WallpaperInfoBottomSheetFragment.Companion.open(parentFragmentManager, wallpaper)
-//        }
+        binding.buttonInfo.setOnClickListener {
+            WallpaperInfoBottomSheetFragment.open(parentFragmentManager)
+        }
 
         binding.buttonDownload.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
@@ -77,11 +74,13 @@ class DetailWallpaperFragment : BaseFragment<FragmentDetailWallpaperBinding>(sho
             parentFragmentManager.popBackStack()
         }
 
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                parentFragmentManager.popBackStack()
-            }
-        })
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    parentFragmentManager.popBackStack()
+                }
+            })
     }
 }
 

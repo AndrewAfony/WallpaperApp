@@ -1,15 +1,19 @@
 package andrewafony.test.data.repository
 
+import andrewafony.test.data.WallpaperPagingSource
 import andrewafony.test.data.local.WallpaperLocalDataSource
 import andrewafony.test.data.local.entities.toEntity
 import andrewafony.test.data.local.entities.toWallpaper
 import andrewafony.test.data.remote.WallpaperCloudDataSource
 import andrewafony.test.domain.model.Wallpaper
 import andrewafony.test.domain.repository.WallpaperRepository
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 
 internal class WallpaperRepositoryImpl(
     private val cloudDataSource: WallpaperCloudDataSource,
@@ -17,13 +21,13 @@ internal class WallpaperRepositoryImpl(
 ) : WallpaperRepository {
 
     override fun wallpapersPaging(query: String): Flow<PagingData<Wallpaper>> {
-        return androidx.paging.Pager(
-            config = androidx.paging.PagingConfig(
+        return Pager(
+            config = PagingConfig(
                 pageSize = PAGE_SIZE,
                 enablePlaceholders = true
             ),
             pagingSourceFactory = {
-                andrewafony.test.data.WallpaperPagingSource(
+                WallpaperPagingSource(
                     cloudDataSource,
                     query
                 )
@@ -36,12 +40,12 @@ internal class WallpaperRepositoryImpl(
 
 
     override suspend fun getWallpaperById(id: String): Wallpaper =
-        kotlinx.coroutines.withContext(Dispatchers.IO) {
+        withContext(Dispatchers.IO) {
             localDataSource.getWallpaperById(id).toWallpaper()
         }
 
     override suspend fun toggleFavorite(wallpaper: Wallpaper) =
-        kotlinx.coroutines.withContext(Dispatchers.IO) {
+        withContext(Dispatchers.IO) {
 
             val exist = localDataSource.exists(wallpaper.id)
 

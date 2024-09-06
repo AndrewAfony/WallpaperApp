@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:clickable="true"
-    android:focusable="true"
-    tools:context="andrewafony.test.wallpaper_saved.DetailWallpaperFragment">
+    android:focusable="true">
 
     <ImageView
         android:id="@+id/full_wallpaper"

@@ -35,7 +35,9 @@ class MainFragment : BaseFragment<FragmentMainBinding>(true) {
         }
 
         adapter = WallpaperAdapter(
-            onClick = { wallpaper -> navigation.navigateToDetail(wallpaper.url) },
+            onClick = { wallpaper ->
+                navigation.navigateToDetail(wallpaper.url)
+            },
             onToggleFavorite = searchViewModel::toggleFavorite
         )
 
