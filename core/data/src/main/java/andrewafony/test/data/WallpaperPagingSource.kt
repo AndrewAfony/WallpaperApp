@@ -25,7 +25,7 @@ class WallpaperPagingSource(
                     page = position
                 )
 
-            val nextKey = if (position < wallpapers.meta.last_page) {
+            val nextKey = if (position < (wallpapers.meta?.last_page ?: 0)) {
                 position.plus(1)
             } else
                 null

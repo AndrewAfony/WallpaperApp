@@ -5,6 +5,7 @@ import andrewafony.test.data.local.WallpaperLocalDataSource
 import andrewafony.test.data.local.entities.toEntity
 import andrewafony.test.data.local.entities.toWallpaper
 import andrewafony.test.data.remote.WallpaperCloudDataSource
+import andrewafony.test.data.remote.model.asWallpaper
 import andrewafony.test.domain.model.Wallpaper
 import andrewafony.test.domain.repository.WallpaperRepository
 import androidx.paging.Pager
@@ -17,7 +18,7 @@ import kotlinx.coroutines.withContext
 
 internal class WallpaperRepositoryImpl(
     private val cloudDataSource: WallpaperCloudDataSource,
-    private val localDataSource: WallpaperLocalDataSource
+    private val localDataSource: WallpaperLocalDataSource,
 ) : WallpaperRepository {
 
     override fun wallpapersPaging(query: String): Flow<PagingData<Wallpaper>> {
@@ -38,6 +39,9 @@ internal class WallpaperRepositoryImpl(
     override fun savedWallpapers(): Flow<List<Wallpaper>> =
         localDataSource.wallpapers().map { it.map { it.toWallpaper() } }
 
+    override suspend fun searchWallpaperById(id: String): Wallpaper = withContext(Dispatchers.IO) {
+        cloudDataSource.searchById(id).map()
+    }
 
     override suspend fun getWallpaperById(id: String): Wallpaper =
         withContext(Dispatchers.IO) {

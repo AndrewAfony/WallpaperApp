@@ -38,5 +38,7 @@ fun WallpaperEntity.toWallpaper() = Wallpaper(
     favorites = favorites,
     size = size,
     resolution = resolution,
+    uploader = null,
+    tags = emptyList(),
     isSaved = isSaved
 )

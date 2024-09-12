@@ -23,7 +23,9 @@ data class WallpaperInfo(
     val source: String,
     val thumbs: WallpaperThumbs,
     val url: String,
-    val views: Int
+    val views: Int,
+    val uploader: WallpaperUploader? = null,
+    val tags : List<WallpaperTag>? = null
 )
 
 fun WallpaperInfo.asWallpaper() = Wallpaper(
@@ -35,6 +37,8 @@ fun WallpaperInfo.asWallpaper() = Wallpaper(
     favorites = favorites,
     size = "%.1f".format(file_size/1048576.0),
     resolution = resolution,
+    uploader = uploader?.asUploader(),
+    tags = tags?.map { it.asTag() } ?: emptyList(),
     isSaved = false
 )
 

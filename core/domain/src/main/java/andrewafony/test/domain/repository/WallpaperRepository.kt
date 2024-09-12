@@ -10,6 +10,8 @@ interface WallpaperRepository {
 
     fun savedWallpapers() : Flow<List<Wallpaper>>
 
+    suspend fun searchWallpaperById(id: String) : Wallpaper
+
     suspend fun getWallpaperById(id: String) : Wallpaper
 
     suspend fun toggleFavorite(wallpaper: Wallpaper)

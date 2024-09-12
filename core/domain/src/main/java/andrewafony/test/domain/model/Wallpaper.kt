@@ -9,5 +9,7 @@ data class Wallpaper(
     val favorites: Int,
     val size: String,
     val resolution: String,
-    val isSaved: Boolean
+    val isSaved: Boolean,
+    val uploader: Uploader?,
+    val tags: List<Tag>,
 )

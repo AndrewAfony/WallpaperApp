@@ -45,7 +45,7 @@ class MainNavigationImpl(
     }
 
     override fun navigate(itemId: Int): Boolean {
-        return when (itemId) {
+        return when (itemId) { // TODO fix back press
             R.id.main -> {
 //                manager.commit {
 //                    hide(currentFragment)
@@ -72,6 +72,5 @@ class MainNavigationImpl(
             }
             else -> false
         }
-        return true
     }
 }

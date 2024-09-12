@@ -4,6 +4,7 @@ import andrewafony.test.common.BaseFragment
 import andrewafony.test.wallpaper_detail.databinding.FragmentDetailWallpaperBinding
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,11 +20,14 @@ import coil3.toBitmap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailWallpaperFragment :
     BaseFragment<FragmentDetailWallpaperBinding>(showBottomNavigation = false) {
 
     private val imageSaver: ImageSaver by inject()
+
+    private val viewModel by viewModel<DetailWallpaperViewModel>()
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentDetailWallpaperBinding
         get() = FragmentDetailWallpaperBinding::inflate
@@ -34,6 +38,7 @@ class DetailWallpaperFragment :
         postponeEnterTransition()
 
         val url = arguments?.getString("url")
+        val id = url?.substringAfterLast("-")?.substringBefore(".") ?: ""
 
         binding.fullWallpaper.scaleType = ImageView.ScaleType.CENTER_CROP
         binding.fullWallpaper.load(url) {
@@ -56,7 +61,8 @@ class DetailWallpaperFragment :
         }
 
         binding.buttonInfo.setOnClickListener {
-            WallpaperInfoBottomSheetFragment.open(parentFragmentManager)
+            viewModel.loadWallpaperInfo(id)
+            WallpaperInfoBottomSheetFragment.open(childFragmentManager)
         }
 
         binding.buttonDownload.setOnClickListener {

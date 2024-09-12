@@ -4,6 +4,7 @@ import andrewafony.test.common.databinding.WallpaperItemBinding
 import andrewafony.test.domain.model.Wallpaper
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView

@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class WallpapersSearchResponse(
     val data: List<WallpaperInfo>,
-    val meta: WallpaperMeta
+    val meta: WallpaperMeta? = null
 ): MapperTo<List<Wallpaper>> {
 
     override fun map(): List<Wallpaper> {
