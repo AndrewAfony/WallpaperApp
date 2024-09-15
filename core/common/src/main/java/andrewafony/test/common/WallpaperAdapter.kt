@@ -8,7 +8,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.paging.AsyncPagingDataDiffer
 import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.ListUpdateCallback
 import androidx.recyclerview.widget.RecyclerView
 import coil3.load
 import coil3.memory.MemoryCache
@@ -44,6 +46,7 @@ class WallpaperAdapter(
     ) {
         when (payloads.firstOrNull()) {
             WallpaperPayloads.Favorite -> getItem(position)?.let { holder.bindStar(it) }
+            WallpaperPayloads.Image -> getItem(position)?.let { holder.bindImage(it) }
             else -> onBindViewHolder(holder, position)
         }
     }
@@ -57,18 +60,25 @@ class WallpaperViewHolder(
 
     fun bind(wallpaper: Wallpaper) { // todo loader and error
 
+        bindImage(wallpaper)
+
+        bindStar(wallpaper)
+    }
+
+    fun bindImage(wallpaper: Wallpaper) {
         with(binding.wallpaper) {
             scaleType = ImageView.ScaleType.CENTER_CROP
             load(wallpaper.url) {
                 error(ColorDrawable(Color.RED))
                 size(Dimension.Pixels(250), Dimension.Undefined)
-                crossfade(true)
+//                crossfade(true)
+                listener(
+                    onSuccess = { _, _ ->
+                        binding.root.setOnClickListener { onClick(wallpaper) }
+                    }
+                )
             }
         }
-
-        bindStar(wallpaper)
-
-        binding.root.setOnClickListener { onClick(wallpaper) }
     }
 
     fun bindStar(wallpaper: Wallpaper) {

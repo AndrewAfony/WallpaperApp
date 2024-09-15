@@ -1,6 +1,7 @@
 package andrewafony.test.wallpaper_saved
 
 import andrewafony.test.common.BaseFragment
+import andrewafony.test.common.NavigateToDetail
 import andrewafony.test.wallpaper_saved.databinding.FragmentSavedWallpapersBinding
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -22,7 +23,7 @@ class SavedWallpapersFragment : BaseFragment<FragmentSavedWallpapersBinding>(tru
 
     private lateinit var adapter: SavedWallpaperAdapter
 
-    private val navigation: SavedWallpapersNavigation by inject { parametersOf(parentFragmentManager) }
+    private val navigation: NavigateToDetail by inject { parametersOf(parentFragmentManager) }
 
     private val savedViewModel by viewModel<SavedWallpapersViewModel>()
 

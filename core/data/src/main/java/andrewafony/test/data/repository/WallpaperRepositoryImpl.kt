@@ -43,21 +43,19 @@ internal class WallpaperRepositoryImpl(
         cloudDataSource.searchById(id).map()
     }
 
-    override suspend fun getWallpaperById(id: String): Wallpaper =
-        withContext(Dispatchers.IO) {
-            localDataSource.getWallpaperById(id).toWallpaper()
-        }
+    override suspend fun getWallpaperById(id: String): Wallpaper = withContext(Dispatchers.IO) {
+        localDataSource.getWallpaperById(id).toWallpaper()
+    }
 
-    override suspend fun toggleFavorite(wallpaper: Wallpaper) =
-        withContext(Dispatchers.IO) {
+    override suspend fun toggleFavorite(wallpaper: Wallpaper) = withContext(Dispatchers.IO) {
 
-            val exist = localDataSource.exists(wallpaper.id)
+        val exist = localDataSource.exists(wallpaper.id)
 
-            if (!exist) {
-                localDataSource.saveWallpaper((wallpaper.toEntity().copy(isSaved = true)))
-            } else
-                localDataSource.deleteWallpaper(wallpaper.toEntity())
-        }
+        if (!exist) {
+            localDataSource.saveWallpaper((wallpaper.toEntity().copy(isSaved = true)))
+        } else
+            localDataSource.deleteWallpaper(wallpaper.toEntity())
+    }
 
     companion object {
 

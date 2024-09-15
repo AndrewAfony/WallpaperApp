@@ -19,12 +19,15 @@ object DiffUtilCallback : DiffUtil.ItemCallback<Wallpaper>() {
     ): Any? {
         return when {
             oldItem.isSaved != newItem.isSaved -> WallpaperPayloads.Favorite
+            oldItem.url != newItem.url -> WallpaperPayloads.Image
             else -> super.getChangePayload(oldItem, newItem)
         }
     }
 }
 
 sealed interface WallpaperPayloads {
+
+    data object Image : WallpaperPayloads
 
     data object Favorite : WallpaperPayloads
 }

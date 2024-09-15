@@ -1,15 +1,18 @@
 package andrewafony.test.wallpaper_search
 
 import andrewafony.test.common.BaseFragment
+import andrewafony.test.common.NavigateToDetail
 import andrewafony.test.common.WallpaperAdapter
 import andrewafony.test.wallpaper_search.databinding.FragmentMainBinding
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doOnTextChanged
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.LoadState
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -20,7 +23,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(true) {
 
     private val searchViewModel by viewModel<SearchViewModel>()
 
-    private val navigation: SearchScreenNavigation by inject { parametersOf(parentFragmentManager) }
+    private val navigation : NavigateToDetail by inject { parametersOf(parentFragmentManager) }
 
     private lateinit var adapter: WallpaperAdapter
 
@@ -44,33 +47,23 @@ class MainFragment : BaseFragment<FragmentMainBinding>(true) {
         binding.rvWallpapers.adapter = adapter
 
         lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                searchViewModel.wallpapers.collectLatest(adapter::submitData)
+            }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        lifecycleScope.launch { // TODO bug: при открытии приложения при быстром нажатии на второй фрагмент в bottom navigation
             adapter.loadStateFlow.collect { loadState ->
-                binding.progressBar.visibility =
-                    if (loadState.refresh is androidx.paging.LoadState.Loading) View.VISIBLE else View.GONE
-                if (loadState.refresh is androidx.paging.LoadState.Error) {
+                binding.progressBar.visibility = if (loadState.refresh is LoadState.Loading) View.VISIBLE else View.GONE
+                if (loadState.refresh is LoadState.Error) {
                     binding.errorText.visibility = View.VISIBLE
-                    binding.errorText.text =
-                        (loadState.refresh as androidx.paging.LoadState.Error).error.message
+                    binding.errorText.text = (loadState.refresh as LoadState.Error).error.message
                 } else
                     binding.errorText.visibility = View.GONE
             }
-        }
-
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    if (binding.searchBar.hasFocus()) {
-                        binding.searchBar.clearFocus()
-                    } else {
-                        isEnabled = false
-                        requireActivity().onBackPressedDispatcher.onBackPressed()
-                    }
-                }
-            })
-
-        lifecycleScope.launch {
-            searchViewModel.wallpapers.collectLatest(adapter::submitData)
         }
     }
 }
